@@ -6,5 +6,56 @@
     margin: 0 auto;
     height: 50vmin;
     padding: 20vh 0;
-    
+}
+
+.meal-plan {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px; 
+}
+
+.meal-plan img {
+    height: 100px;
+}
+
+.display li {
+    margin: 15px auto; 
+    padding: 10px 30px;
+    list-style-type: none;
+    text-align: left; 
+    box-shadow: 0 0 10px #ccc;
+    transition: transform 1s;
+}
+
+.display li:after {
+    font: 700 18px "Arial"; 
+    color: #bbb; 
+    float: right;
+}
+.display li[data-day="0"]:after { content: "Sunday"; }
+.display li[data-day="1"]:after { content: "Monday"; }
+.display li[data-day="2"]:after { content: "Tuesday"; }
+.display li[data-day="3"]:after { content: "Wednesday"; }
+.display li[data-day="4"]:after { content: "Thursday"; }
+.display li[data-day="5"]:after { content: "Friday"; }
+.display li[data-day="6"]:after { content: "Saturday"; }
+
+.display li:hover {
+    transform: scale(1.1);
+}
+
+.editing {
+    animation: edit infinite .5s;
+}
+
+@keyframes edit {
+    0%   {transform: rotate(0deg);}
+    25%  {transform: rotate(.5deg);}
+    50%  {transform: rotate(-.5deg);}
+    75%  {transform: rotate(.5deg);}
+    100% {transform: rotate(0deg);}
+}
+
+.actions {
+
 }
