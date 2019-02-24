@@ -1,0 +1,29 @@
+.sign-in {
+    position: fixed; 
+    top: 18%; 
+    left: 0; 
+    right: 0; 
+    height: 400px;
+    width: 360px;
+    text-align: center; 
+    margin: 0 auto;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    background: #fff;   
+    box-shadow: 0 0 5px #ccc;
+    z-index: 2;
+}
+
+.sign-in .logo {
+    height: 200px;
+}
+
+.overlay {
+    z-index: 1; 
+    position: fixed; 
+    top: 0; 
+    bottom: 0; 
+    height: 100%;
+    width: 100%;
+    background: #333;
+}

@@ -1,0 +1,33 @@
+{
+  "name": "meal_planner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build && npm run-script seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allenjwelch/meal_planner.git"
+  },
+  "author": "Allen Welch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allenjwelch/meal_planner/issues"
+  },
+  "homepage": "https://github.com/allenjwelch/meal_planner#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4",
+    "if-env": "^1.0.4",
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.10"
+  }
+}

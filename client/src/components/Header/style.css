@@ -1,0 +1,177 @@
+.header {
+    display: flex;
+    justify-content: flex-end;
+    height: 75px;
+    position: relative;
+}
+
+#headerLogo {
+    color: red;
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 130px;
+    text-align: center;
+
+}
+
+.navList, #navList-drop {
+    list-style-type: none;
+    margin: 20px;
+}
+.navLink {
+    display: inline-block;
+    padding: 0 10px;
+    font: 400 20px 'Acme', sans-serif;
+}
+
+.navLink a:hover {
+    color: #41b7d8;
+}
+
+.navLink a {
+    text-decoration: none;
+    color: #333;
+}
+
+.navLink:not(:last-child) {
+    border-right: 1px solid #ccc;
+}
+
+
+/* Mobile DropDown */
+#mobile-drop {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+}
+
+#mobile-drop h1 {
+    margin: 0;
+}
+#navList-drop {
+    background: #fff;
+    padding: 10px 28px;
+    margin: 0;
+    height: auto;
+    min-width: 200px;
+    position: absolute;
+    left: -20px;
+    top: 55px;
+    text-align: left;
+    border-bottom-right-radius: 8px;
+}
+
+.navLink-drop {
+    margin-bottom: 10px;
+    font: 400 20px 'Acme', sans-serif;
+
+}
+
+.navLink-drop:hover a {
+    color: #41b7d8;
+    font-weight: bold;
+}
+
+.navLink-drop a {
+    text-decoration: none;
+    color: #333;
+}
+
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+/* Hamburger Icon */
+#nav-icon {
+    width: 45px;
+    height: 45px;
+    position: relative;
+    margin: 50px auto;
+    transform: rotate(0deg);
+    transition: .5s ease-in-out;
+    cursor: pointer;
+    margin: 0;
+}
+
+#nav-icon span {
+    display: block;
+    position: absolute;
+    height: 5px;
+    width: 50%;
+    background: #282C34;
+    /* border-bottom:1px solid #282C34; */
+    opacity: 1;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+  }
+
+#nav-icon span:nth-child(even) {
+    left: 50%;
+    border-radius: 0 9px 9px 0;
+}
+
+#nav-icon span:nth-child(odd) {
+    left:0px;
+    border-radius: 9px 0 0 9px;
+}
+
+#nav-icon span:nth-child(1), #nav-icon span:nth-child(2) {
+    top: 5px;
+}
+
+#nav-icon span:nth-child(3), #nav-icon span:nth-child(4) {
+    top: 18px;
+}
+
+#nav-icon span:nth-child(5), #nav-icon span:nth-child(6) {
+    top: 31px;
+}
+
+#nav-icon.open span:nth-child(1),#nav-icon.open span:nth-child(6) {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+#nav-icon.open span:nth-child(2),#nav-icon.open span:nth-child(5) {
+    transform: rotate(-45deg);
+}
+
+#nav-icon.open span:nth-child(1) {
+    left: 4px;
+    top: 7px;
+    z-index: 10;
+}
+
+#nav-icon.open span:nth-child(2) {
+    left: calc(50% - 5px);
+    top: 7px;
+}
+
+#nav-icon.open span:nth-child(3) {
+    left: -50%;
+    opacity: 0;
+}
+
+#nav-icon.open span:nth-child(4) {
+    left: 100%;
+    opacity: 0;
+}
+
+#nav-icon.open span:nth-child(5) {
+    left: 5px;
+    top: 21px;
+}
+
+#nav-icon.open span:nth-child(6) {
+    left: calc(49% - 5px);
+    top: 21px;
+}
