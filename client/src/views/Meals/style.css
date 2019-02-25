@@ -24,7 +24,7 @@
     list-style-type: none;
     text-align: left; 
     box-shadow: 0 0 10px #ccc;
-    transition: transform 1s;
+    transition: all 1s;
 }
 
 .display li:after {
@@ -46,13 +46,18 @@
 
 .editing {
     animation: edit infinite .5s;
+    background: rgb(221, 255, 189);
+}
+
+.editing.selected {
+    transform: scale(1.1);
 }
 
 @keyframes edit {
     0%   {transform: rotate(0deg);}
-    25%  {transform: rotate(.5deg);}
-    50%  {transform: rotate(-.5deg);}
-    75%  {transform: rotate(.5deg);}
+    25%  {transform: rotate(0.3deg);}
+    50%  {transform: rotate(-0.3deg);}
+    75%  {transform: rotate(0.3deg);}
     100% {transform: rotate(0deg);}
 }
 
