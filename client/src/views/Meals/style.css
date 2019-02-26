@@ -44,22 +44,24 @@
     transform: scale(1.1);
 }
 
-.editing {
-    animation: edit infinite .5s;
-    background: rgb(221, 255, 189);
+.display li.editing {
+    /* animation: edit infinite .5s; */
+    background: rgb(239, 255, 226);
+    box-shadow: 0 0 30px #bbb;
 }
 
-.editing.selected {
+.display li.editing.selected {
     transform: scale(1.1);
+    background: rgb(221, 253, 196);
 }
 
-@keyframes edit {
+/* @keyframes edit {
     0%   {transform: rotate(0deg);}
     25%  {transform: rotate(0.3deg);}
     50%  {transform: rotate(-0.3deg);}
     75%  {transform: rotate(0.3deg);}
     100% {transform: rotate(0deg);}
-}
+} */
 
 .actions {
 
