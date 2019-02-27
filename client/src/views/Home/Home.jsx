@@ -31,7 +31,7 @@ class Home extends Component {
                 {
                     this.state.user ?
                         <div className = "access">
-                            <h1>User Signed in</h1>
+                            {/* <h1>User Signed in</h1> */}
                             <Meals user={this.state.user}/>
                         </div>
 
