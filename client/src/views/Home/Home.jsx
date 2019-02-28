@@ -13,29 +13,33 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.getUser()
+        this.getUser() //! TESTING - Bypassing localstorage to loading test user
         // this.checkStorage()
     }
 
     getUser() {
         if (this.state.newUser) {
-            // API.postUser()
+            //TODO API.postUser()
         } else {
-            API.getUser()
+            API.getUserByName() //! TESTING - HARDCODED
                 .then(res => 
                     this.setState({user: res.data, }, () => {
                         console.log(this.state.user, "state.user");
                         localStorage.setItem('user', this.state.user[0].id)
                     }))
-                // .then( localStorage.setItem('user', this.state.user[0]))
                 .catch(err => console.log(err))
         }
     }
 
+    updateLastLogin() {
+        //TODO API.updateLoginDate()
+    }
+
     checkStorage() {
         if(localStorage.getItem('user')) {
-            let user = localStorage.getItem('user'); 
-            console.log(user); 
+            let uid = localStorage.getItem('user'); 
+            console.log(uid); 
+            //TODO API.getUserById
         } else {
             console.log('no user signed in')
         }
@@ -46,11 +50,17 @@ class Home extends Component {
 
         }
 
-
+        //TODO this.getUser()
     }
 
     swapSignIn() {
         this.state.newUser ? this.setState({newUser: false }) : this.setState({newUser: true});
+    }
+
+    signOut() {
+        this.setState({user: false }, () => {
+            localStorage.removeItem('user')
+        });
     }
 
     render() {
@@ -60,19 +70,18 @@ class Home extends Component {
                 {
                     this.state.user ?
                         <div className = "access">
-                            {/* <h1>User Signed in</h1> */}
                             <Meals user={this.state.user}/>
+                            <button className="signout-btn" onClick={() => this.signOut()}>Sign Out</button>
                         </div>
 
 
                     : <div className="no-access">
                         <section className="sign-in">
                             <img src={logo} className="logo" alt="logo" />
-
                             {
                                 !this.state.newUser ?
                                     <div className="returning-user">
-                                        <p>SignIn</p>
+                                        <p>Sign In</p>
                                         <form action="">
                                             <input id="user-name" type="text" placeholder="User"/>
                                             <input id="user-password" type="password" placeholder="Password"/>

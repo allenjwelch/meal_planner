@@ -3,8 +3,11 @@ import axios from 'axios';
 
 export default {
 
-    getUser: function() {
+    getUserByName: function() {
         return axios.get('/nomnom/user')
+    },
+    getUserById: function(uid) {
+        return axios.get(`/nomnom/user/${uid}`)
     },
     getAllMeals: function(uid) {
         console.log(uid)
