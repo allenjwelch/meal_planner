@@ -10,6 +10,7 @@
 
 .meal-plan {
     width: 85%;
+    max-width: 750px;
     margin: 0 auto;
     padding: 20px; 
 }
@@ -66,7 +67,7 @@
 
 .display li.editing {
     /* animation: edit infinite .5s; */
-    background: rgb(235, 255, 218);
+    background: #ebffda;
     box-shadow: 0 0 30px #333;
 }
 
@@ -90,15 +91,18 @@
     margin: 10px;
     min-width: 120px;
     font-size: 18px;
-    padding: 10px;
-    color: #fff; 
     font-weight: 700;
     border-radius: 8px;
+    padding: 10px;
+    color: #fff; 
+    cursor: pointer;
 }
 
 .actions button:focus {
     outline: none;
 }
+
+
 
 
 .edit {
@@ -112,3 +116,9 @@
 .createNew {
     background: rgb(117, 139, 127); 
 }
+
+.createNew a {
+    text-decoration: none; 
+    color: #fff;
+}
+

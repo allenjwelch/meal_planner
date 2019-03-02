@@ -110,6 +110,7 @@ class Meals extends Component {
     shufflePlan() {
         console.log('shuffling...'); 
         let freshShuffle = this.shuffleMeals(this.state.mealPlan); 
+        // document.querySelector('display').removeChild('li'); 
         this.setState({mealPlan: freshShuffle}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
     }
 
@@ -141,7 +142,11 @@ class Meals extends Component {
                         </div>
 
 
-                    : <img src={logo} className="logo blank-page" alt="logo" />
+                    : <div className="no-meals">
+                        <img src={logo} className="logo blank-page" alt="logo" />
+                        <h1>No Meals</h1>
+                        <button className="createNew"><a href="/add-meal">Add Meal</a></button>
+                    </div>
                 }
             </section>
         )

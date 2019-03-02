@@ -11,12 +11,12 @@ router.get("/:uid", function(req, res) {
     connection.query(`
         SELECT meals.id, meals.meal, meals.prep_time 
         FROM meal_planner.meals
-        INNER JOIN meal_planner.users 
-        ON meals.user_id = ${req.params.uid};`, function(err, data) {
+        WHERE meals.user_id = ${req.params.uid};`, function(err, data) {
         if (err) throw err;
         console.log(data);
         res.send(data); 
     }); 
+
 
 
     // TESTING --

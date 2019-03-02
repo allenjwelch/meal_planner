@@ -44,4 +44,11 @@ SELECT * FROM meal_planner.meals where meal_planner.meals.user_id = meal_planner
 SELECT * FROM meal_planner.meals INNER JOIN meal_planner.users ON meals.user_id = users.id;
 SELECT * FROM meal_planner.meals INNER JOIN meal_planner.users ON meals.user_id = 1;
 
-SELECT meals.id, meals.meal, meals.prep_time FROM meal_planner.meals INNER JOIN meal_planner.users ON meals.user_id = users.id;
+SELECT meals.id, meals.meal, meals.prep_time 
+FROM meal_planner.meals 
+INNER JOIN meal_planner.users 
+ON meals.user_id = users.id;
+
+SELECT meals.id, meals.meal, meals.prep_time 
+FROM meal_planner.meals 
+WHERE meals.user_id = 1;
