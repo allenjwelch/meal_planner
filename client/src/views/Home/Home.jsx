@@ -10,17 +10,63 @@ class Home extends Component {
     state = {
         user: '', 
         newUser: false,
+        currentDate: '',
+        updateMeals: false,
     }
 
     componentDidMount() {
         // this.userLogin() //! TESTING - Bypassing localstorage to loading test user
-        // this.checkStorage()
+        this.getDate();
+        this.checkStorage();
+    }
+
+    getDate() {
+        let date = new Date();
+        let weekday = new Date(); 
+        date.setTime(date.getTime())
+        // let expires = new Date(); 
+        // expires.setTime(date.getTime() + (1 * 60 * 60 * 1000));
+        // this.setState({ currentDate: date }, () => {
+        //     console.log(this.state.currentDate); 
+        // })
+
+        weekday = weekday.getDay();
+        console.log(weekday); 
+        console.log(date); 
+        
+        // var testDate = new Date(0);
+        // console.log(testDate)
+    }
+
+    checkDate() {
+        console.log('checking date..')
+        let lastLogin = new Date(this.state.user[0].last_logged); 
+        let currentDay = new Date();
+        let lastWeek = new Date(); 
+        let lastLoginInt = lastLogin.getDay(); 
+        let currentDayInt = currentDay.getDay(); 
+        lastWeek.setTime(currentDay.getTime() - (1 * 7 * 24 * 60 * 60 * 1000));
+
+        if (lastLogin <= lastWeek) {
+            console.log('UPDATE');
+            this.setState({updateMeals: true }, () => {
+                console.log(this.state.updateMeals, "state.updateMeals");
+            }) 
+        } else if (currentDayInt < lastLoginInt) {
+            console.log('UPDATE');
+            this.setState({updateMeals: true }, () => {
+                console.log(this.state.updateMeals, "state.updateMeals");
+            }) 
+        } else {
+            console.log('Dont UPDATE');
+            console.log(this.state.updateMeals, "state.updateMeals")
+        }
     }
 
     userLogin(user, pass) {
         if (this.state.newUser) {
             console.log('posting new user...')
-            //TODO API.postUser()
+            //TODO needs to also pass currentDate
             API.postNewUser(user, pass)
                 .then(res => 
                     console.log(res.data)  
@@ -33,13 +79,15 @@ class Home extends Component {
             console.log(user, pass)
             API.getUserByName(user, pass) 
                 .then(res => 
-                    // console.log(res)
                     !res.data.length ? document.getElementById('user-invalid').innerHTML = 'Username or password incorrect'
                     : this.setState({user: res.data, }, () => {
                         console.log(this.state.user, "state.user");
                         localStorage.setItem('user', this.state.user[0].id)
-                    }) 
-                ).catch(err => console.log(err))
+                        this.checkDate()
+                    }) )
+                 //TODO this.checkDate()
+                .then( this.updateLastLogin() )
+                .catch(err => console.log(err))
         }
     }
 
@@ -51,7 +99,13 @@ class Home extends Component {
         if(localStorage.getItem('user')) {
             let uid = localStorage.getItem('user'); 
             console.log(uid); 
-            //TODO API.getUserById
+            API.getUserById(uid) 
+                .then(res => 
+                    this.setState({user: res.data, }, () => {
+                        console.log(this.state.user, "state.user");
+                    }) 
+                //TODO this.checkDate()
+                ).catch(err => console.log(err))
         } else {
             console.log('no user signed in')
         }
@@ -59,6 +113,7 @@ class Home extends Component {
 
     validateUser(e) {
         e.preventDefault(); 
+        //todo need to also pass currentDate to userlogin
         let userName = document.getElementById('user-name'); 
         let password = document.getElementById('user-password'); 
         if (!this.state.newUser) {

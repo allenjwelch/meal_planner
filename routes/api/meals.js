@@ -9,7 +9,7 @@ router.get("/:uid", (req, res) => {
     // console.log(req.params);
     console.log(req.params.uid);
     connection.query(`
-        SELECT meals.id, meals.meal, meals.prep_time 
+        SELECT * 
         FROM meal_planner.meals
         WHERE meals.user_id = ${req.params.uid};`, function(err, data) {
         if (err) throw err;

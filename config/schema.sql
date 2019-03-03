@@ -7,7 +7,8 @@ CREATE TABLE users (
     user VARCHAR( 255) NOT NULL,
     password VARCHAR( 255 ) NOT NULL,
     -- DATE 'YYYY-MM-DD'
-    last_logged DATE NOT NULL,
+    last_logged VARCHAR( 255 ) NOT NULL,
+    meals_list VARCHAR(255), 
     PRIMARY KEY (id) 
 );
 
@@ -26,7 +27,7 @@ CREATE TABLE meals (
 );
 
 -- DEMO DATA
-INSERT INTO users(user, password, last_logged) VALUES ('demo', 'demo', '2019-02-26');
+INSERT INTO users(user, password, last_logged, meals_list) VALUES ('demo', 'demo', 'Sun Mar 03 2019 15:18:16 GMT-0500', '1, 2, 3, 4, 5, 6, 7');
 
 INSERT INTO meals(user_id, meal, prep_time)
 VALUES (1, 'Vegetarian Chili', 45 ), 
@@ -55,5 +56,9 @@ INNER JOIN meal_planner.users
 ON meals.user_id = users.id;
 
 SELECT meals.id, meals.meal, meals.prep_time 
+FROM meal_planner.meals 
+WHERE meals.user_id = 1;
+
+SELECT * 
 FROM meal_planner.meals 
 WHERE meals.user_id = 1;

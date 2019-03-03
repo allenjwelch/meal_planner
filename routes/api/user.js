@@ -19,10 +19,19 @@ router.get("/", (req, res) => {
     // ]);
 });
 
+router.get('/:uid', (req, res) => {
+    connection.query(`
+        SELECT * FROM users 
+        WHERE id = '${req.params.uid}'; `, (err, data) => {
+        if (err) throw err;
+        res.send(data);
+    }); 
+})
+
 router.get("/:user/:pass", (req, res) => {
     connection.query(`
         SELECT * FROM users 
-        WHERE user = '${req.params.pass}' 
+        WHERE user = '${req.params.user}' 
         AND password = '${req.params.pass}';`, (err, data) => {
         if (err) throw err;
         res.send(data);
