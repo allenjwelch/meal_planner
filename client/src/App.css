@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Courgette|Lato');
+
+/* 
+font-family: 'Courgette', cursive;
+font-family: 'Lato', sans-serif;
+ */
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: #eee;
+}
+
+
+
 .App {
   text-align: center;
 }

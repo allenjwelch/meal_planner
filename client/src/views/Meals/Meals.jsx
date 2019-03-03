@@ -10,6 +10,7 @@ class Meals extends Component {
     state = {
         allMeals : [], 
         mealPlan: [], //max 7
+        welcomeMessage: ['Hope your hungry!', 'Let\'s get cookin!', 'I can\'t wait to eat!', 'This week\'s meals look great!']
     }
 
     constructor(props){
@@ -25,7 +26,7 @@ class Meals extends Component {
     // }
 
     getAllMeals() {
-        API.getAllMeals()
+        API.getAllMeals(this.props.user[0].id)
             .then(res => 
                 this.setState({allMeals: res.data, }, () => {
                     console.log(this.state.allMeals, "state.allMeals"); 
@@ -109,6 +110,7 @@ class Meals extends Component {
     shufflePlan() {
         console.log('shuffling...'); 
         let freshShuffle = this.shuffleMeals(this.state.mealPlan); 
+        // document.querySelector('display').removeChild('li'); 
         this.setState({mealPlan: freshShuffle}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
     }
 
@@ -121,24 +123,30 @@ class Meals extends Component {
                     
                         <div className="meal-plan">
                             <img src={logo} alt="logo" />
-                            <h1>Welcome {this.props.user[0].name}</h1>
+                            <h1 className='title'>Welcome {this.props.user[0].user}!</h1>
+                            <p className='loaded'>Loaded 7 out of {this.state.allMeals.length} total meals</p>
+                            <p className='welcome'>"{this.state.welcomeMessage[Math.floor(Math.random() * 4)]}" </p>
                             <ul className="display">
                                 {
                                     this.state.mealPlan.map( (meal, index) => {
-                                        return <li key={meal.id} data-day={index} onClick={this.selectSwap.bind(this)}>{meal.name}</li>
+                                        return <li key={meal.id} data-day={index} onClick={this.selectSwap.bind(this)}>{meal.meal}</li>
                                     })
                                 }
                             </ul>
 
-
                             <div className="actions">
                                 <button className="edit" onClick={() => this.enableEdits()}>Edit</button>
                                 <button className="shuffle" onClick={() => this.shufflePlan()}>Shuffle</button>
+                                <button className="createNew"><a href="/add-meal">Add Meal</a></button>
                             </div>
                         </div>
 
 
-                    : <img src={logo} className="logo blank-page" alt="logo" />
+                    : <div className="no-meals">
+                        <img src={logo} className="logo blank-page" alt="logo" />
+                        <h1>No Meals</h1>
+                        <button className="createNew"><a href="/add-meal">Add Meal</a></button>
+                    </div>
                 }
             </section>
         )

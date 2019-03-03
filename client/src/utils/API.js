@@ -3,11 +3,20 @@ import axios from 'axios';
 
 export default {
 
-    getUser: function() {
-        return axios.get('/nomnom/user')
+    getUserByName: function(user, pass) { // just for testing..
+        return axios.get(`/nomnom/user/${user}/${pass}`)
     },
-    getAllMeals: function() {
-        return axios.get('/nomnom/meals');
+    getUserById: function(uid) {
+        return axios.get(`/nomnom/user/${uid}`)
+    },
+    postNewUser: function(user, pass) {
+        return axios.post(`/nomnom/user/register`, {user, pass})
+    },
+    updateLoginDate: function() {
+        //todo
+    },
+    getAllMeals: function(uid) {
+        console.log(uid)
+        return axios.get(`/nomnom/meals/${uid}`);
     }
-
 };

@@ -9,7 +9,8 @@
 }
 
 .meal-plan {
-    width: 90%;
+    width: 85%;
+    max-width: 750px;
     margin: 0 auto;
     padding: 20px; 
 }
@@ -18,17 +19,37 @@
     height: 100px;
 }
 
+.title {
+    margin: 5px auto;
+}
+
+.loaded {
+    margin: 0;
+}
+
+.welcome {
+    color: #aaa; 
+    font: 400 22px 'Courgette', cursive;
+}
+
+.display {
+    padding: 0;
+}
+
 .display li {
-    margin: 15px auto; 
-    padding: 10px 30px;
+    font-size: 18px;
+    margin: 20px auto; 
+    padding: 15px 30px;
     list-style-type: none;
     text-align: left; 
-    box-shadow: 0 0 10px #ccc;
+    background: #fff;
+    box-shadow: 0 0 10px #666;
     transition: all 1s;
+    cursor: pointer;
 }
 
 .display li:after {
-    font: 700 18px "Arial"; 
+    font: 700 18px 'Lato'; 
     color: #bbb; 
     float: right;
 }
@@ -46,13 +67,15 @@
 
 .display li.editing {
     /* animation: edit infinite .5s; */
-    background: rgb(239, 255, 226);
-    box-shadow: 0 0 30px #bbb;
+    background: #ebffda;
+    box-shadow: 0 0 30px #333;
 }
 
 .display li.editing.selected {
     transform: scale(1.1);
-    background: rgb(221, 253, 196);
+    background: #d9ffbc;
+    border: 2px solid #a9da84;
+
 }
 
 /* @keyframes edit {
@@ -63,6 +86,39 @@
     100% {transform: rotate(0deg);}
 } */
 
-.actions {
-
+.actions button {
+    display: inline-block; 
+    margin: 10px;
+    min-width: 120px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 10px;
+    color: #fff; 
+    cursor: pointer;
 }
+
+.actions button:focus {
+    outline: none;
+}
+
+
+
+
+.edit {
+    background: #76B141; 
+}
+
+.shuffle {
+    background: #0B8343; 
+}
+
+.createNew {
+    background: rgb(117, 139, 127); 
+}
+
+.createNew a {
+    text-decoration: none; 
+    color: #fff;
+}
+
