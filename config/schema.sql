@@ -16,6 +16,11 @@ CREATE TABLE meals (
     user_id INT(11) NOT NULL, 
     meal VARCHAR(255) NOT NULL,
     prep_time INT(255),
+    ingred1 VARCHAR(255), 
+    ingred2 VARCHAR(255), 
+    ingred3 VARCHAR(255), 
+    ingred4 VARCHAR(255), 
+    ingred5 VARCHAR(255), 
     FOREIGN KEY (user_id) REFERENCES users(id),
     PRIMARY KEY (id)
 );

@@ -3,9 +3,9 @@ import './style.css';
 
 class Hamburger extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     state = {
         isOpen: 'close'

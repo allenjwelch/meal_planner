@@ -18,5 +18,8 @@ export default {
     getAllMeals: function(uid) {
         console.log(uid)
         return axios.get(`/nomnom/meals/${uid}`);
+    },
+    postNewMeal: function(uid, newMeal) {
+        return axios.post(`/nomnom/meals/new-meal`, {uid, newMeal})
     }
 };

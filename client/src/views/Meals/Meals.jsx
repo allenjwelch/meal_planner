@@ -13,9 +13,9 @@ class Meals extends Component {
         welcomeMessage: ['Hope your hungry!', 'Let\'s get cookin!', 'I can\'t wait to eat!', 'This week\'s meals look great!']
     }
 
-    constructor(props){
-        super(props)
-     }
+    // constructor(props){
+    //     super(props)
+    //  }
 
     componentDidMount() {
         this.getAllMeals()
@@ -60,7 +60,7 @@ class Meals extends Component {
         console.log(e.target); 
         e.target.classList.add('selected');
         if (swap.length < 2) {swap.push(e.target.dataset.day)}
-        if (swap.length == 2) {
+        if (swap.length === 2) {
             console.log('ready')
             console.log(swap[0], swap[1]);
             this.reorderMealPlan(swap[0], swap[1])
