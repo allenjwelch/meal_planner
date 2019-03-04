@@ -59,6 +59,11 @@
     font-size: 16px;    
 }
 
+#success {
+    margin: 20px auto; 
+    color: #0B8343;
+    font-size: 18px;    
+}
 .actions .add {
     background: #0B8343; 
 }
@@ -69,4 +74,9 @@
 
 .actions .cancel a {
     text-decoration: none; 
+}
+
+.special-actions button {
+    width: 90%;
+    background: rgb(65, 132, 177);
 }

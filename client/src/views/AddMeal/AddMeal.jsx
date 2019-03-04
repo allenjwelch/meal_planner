@@ -47,12 +47,11 @@ class AddMeal extends Component {
     
                 API.postNewMeal(this.state.userID, newMeal)
                     .then(res => 
-                        console.log('resdata: ', res.data)  
-                        // this.setState({user: res.data, }, () => {
-                        //     console.log(this.state.user, "state.user");
-                        //     localStorage.setItem('user', this.state.user[0].id) 
-                        // }) 
-                    ).catch(err => console.log(err))
+                        console.log('resdata: ', res.data))
+                    .then(document.querySelector('form').reset())
+                    .then(document.getElementById('invalid-time').innerHTML= '')
+                    .then(document.getElementById('success').innerHTML = 'Great! You\'ve just added a new meal!')
+                    .catch(err => console.log(err))
     
                 console.log(newMeal); 
             }
@@ -93,11 +92,12 @@ class AddMeal extends Component {
                                 <label><input type="text" className="meal-ingreds" id="meal-ingred-5"/></label>
                             </div>
                             <div id="invalid-time"></div>
+                            <div id="success"></div>
                         </form>
 
                         <div className="actions">
                             <button className="add" onClick={() => this.add()}>Add Meal</button>
-                            <button className="cancel"><a href="/">Cancel</a></button>
+                            <button className="cancel"><a href="/">Go Back</a></button>
                         </div>
                     </div>
                     : <h1>You must be logged in to add a meal</h1>

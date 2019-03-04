@@ -17,28 +17,26 @@ class Home extends Component {
     componentDidMount() {
         // this.userLogin() //! TESTING - Bypassing localstorage to loading test user
         this.getDate();
-        this.checkStorage();
+        this.checkStorage(); // Check local storage if user is still logged in
     }
 
-    getDate() {
+    getDate() { // gets the current login time to add or update a user's info
         let date = new Date();
-        let weekday = new Date(); 
         date.setTime(date.getTime())
-        // let expires = new Date(); 
-        // expires.setTime(date.getTime() + (1 * 60 * 60 * 1000));
-        // this.setState({ currentDate: date }, () => {
-        //     console.log(this.state.currentDate); 
-        // })
+        this.setState({ currentDate: date }, () => {
+            console.log(this.state.currentDate); 
+        })
 
-        weekday = weekday.getDay();
-        console.log(weekday); 
-        console.log(date); 
+        let testdate = new Date('2019-03-04T00:00:35.157Z'); 
+        console.log(testdate);
         
-        // var testDate = new Date(0);
-        // console.log(testDate)
+        // let weekday = new Date(); 
+        // weekday = weekday.getDay();
+        // console.log(weekday); 
+        // console.log(date);
     }
 
-    checkDate() {
+    checkDate() { // checks user's last login date to determine if a new meal plan is needed
         console.log('checking date..')
         let lastLogin = new Date(this.state.user[0].last_logged); 
         let currentDay = new Date();
@@ -47,12 +45,12 @@ class Home extends Component {
         let currentDayInt = currentDay.getDay(); 
         lastWeek.setTime(currentDay.getTime() - (1 * 7 * 24 * 60 * 60 * 1000));
 
-        if (lastLogin <= lastWeek) {
+        if (lastLogin <= lastWeek) { // if the last login was over a week ago, a new meal plan should be created
             console.log('UPDATE');
             this.setState({updateMeals: true }, () => {
                 console.log(this.state.updateMeals, "state.updateMeals");
             }) 
-        } else if (currentDayInt < lastLoginInt) {
+        } else if (currentDayInt < lastLoginInt) { // or if the last login was in the previous week, a new meal plan should be created
             console.log('UPDATE');
             this.setState({updateMeals: true }, () => {
                 console.log(this.state.updateMeals, "state.updateMeals");
@@ -61,19 +59,20 @@ class Home extends Component {
             console.log('Dont UPDATE');
             console.log(this.state.updateMeals, "state.updateMeals")
         }
+
+        this.updateLastLogin(currentDay)
     }
 
-    userLogin(user, pass) {
+    userLogin(user, pass, currentDate) {
         if (this.state.newUser) {
             console.log('posting new user...')
-            //TODO needs to also pass currentDate
-            API.postNewUser(user, pass)
+            API.postNewUser(user, pass, currentDate)
                 .then(res => 
-                    console.log(res.data)  
-                    // this.setState({user: res.data, }, () => {
-                    //     console.log(this.state.user, "state.user");
-                    //     localStorage.setItem('user', this.state.user[0].id) 
-                    // }) 
+                    // console.log(res.data)  
+                    this.setState({user: res.data, }, () => {
+                        console.log(this.state.user, "state.user");
+                        localStorage.setItem('user', this.state.user[0].id) 
+                    }) 
                 ).catch(err => console.log(err))
             } else {
             console.log(user, pass)
@@ -85,26 +84,29 @@ class Home extends Component {
                         localStorage.setItem('user', this.state.user[0].id)
                         this.checkDate()
                     }) )
-                 //TODO this.checkDate()
-                .then( this.updateLastLogin() )
                 .catch(err => console.log(err))
         }
     }
 
-    updateLastLogin() {
-        //TODO API.updateLoginDate()
+    updateLastLogin(currentDay) { // modifies user info and updates with current date for last login
+        console.log(this.state.user); 
+        API.updateLoginDate(this.state.user[0].id, currentDay)
+            .then(res => {
+                console.log(res.data)
+                console.log('updated?') //TODO verify that this query is correct
+            })
     }
 
     checkStorage() {
-        if(localStorage.getItem('user')) {
+        if(localStorage.getItem('user')) { // if local storage exists...
             let uid = localStorage.getItem('user'); 
             console.log(uid); 
-            API.getUserById(uid) 
+            API.getUserById(uid)  // get user info from db using the uid from local storage
                 .then(res => 
                     this.setState({user: res.data, }, () => {
                         console.log(this.state.user, "state.user");
+                        this.checkDate()
                     }) 
-                //TODO this.checkDate()
                 ).catch(err => console.log(err))
         } else {
             console.log('no user signed in')
@@ -113,20 +115,19 @@ class Home extends Component {
 
     validateUser(e) {
         e.preventDefault(); 
-        //todo need to also pass currentDate to userlogin
         let userName = document.getElementById('user-name'); 
         let password = document.getElementById('user-password'); 
-        if (!this.state.newUser) {
+        if (!this.state.newUser) { // returning users
             let invalidMsg = document.getElementById('user-invalid'); 
-            userName.value.length && password.value.length ? this.userLogin(userName.value, password.value) : invalidMsg.innerHTML ='Please fill out both username and password to sign in'; 
-        } else {
+            userName.value.length && password.value.length ? this.userLogin(userName.value, password.value, this.state.currentDate) : invalidMsg.innerHTML ='Please fill out both username and password to sign in'; 
+        } else { // register new user
             let invalidMsg = document.getElementById('user-invalid'); 
             let passwordConfirm = document.getElementById('user-password-confirm'); 
 
             if (userName.value.length && password.value.length && passwordConfirm.value.length) {
                 console.log(password.value, passwordConfirm.value)
                 if (password.value === passwordConfirm.value) {
-                    this.userLogin(userName.value, password.value);
+                    this.userLogin(userName.value, password.value, this.state.currentDate);
                 } else {
                     invalidMsg.innerHTML ='Password entries must be identical'; 
                 }
@@ -153,7 +154,7 @@ class Home extends Component {
                 {
                     this.state.user ?
                         <div className = "access">
-                            <Meals user={this.state.user}/>
+                            <Meals user={this.state.user} updateMeals={this.state.updateMeals}/>
                             <button className="signout-btn" onClick={() => this.signOut()}>Sign Out</button>
                         </div>
 

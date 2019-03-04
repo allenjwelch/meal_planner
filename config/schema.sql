@@ -27,7 +27,7 @@ CREATE TABLE meals (
 );
 
 -- DEMO DATA
-INSERT INTO users(user, password, last_logged, meals_list) VALUES ('demo', 'demo', 'Sun Mar 03 2019 15:18:16 GMT-0500', '1, 2, 3, 4, 5, 6, 7');
+INSERT INTO users(user, password, last_logged, meals_list) VALUES ('demo', 'demo', 'Sun Mar 03 2019 15:18:16 GMT-0500', '1,2,3,4,5,6,7');
 
 INSERT INTO meals(user_id, meal, prep_time)
 VALUES (1, 'Vegetarian Chili', 45 ), 
@@ -62,3 +62,5 @@ WHERE meals.user_id = 1;
 SELECT * 
 FROM meal_planner.meals 
 WHERE meals.user_id = 1;
+
+-- UPDATE `meal_planner`.`users` SET `meals_list`='1,2,3,4,5,6,7' WHERE `id`='1';

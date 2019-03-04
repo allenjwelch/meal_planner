@@ -42,7 +42,18 @@ router.post('/register', (req, res) => {
     console.log(req.body)
     connection.query(`
         INSERT IGNORE INTO users(user, password, last_logged) 
-        VALUES ('${req.body.user}', '${req.body.pass}', '2019-02-26');`, (err, data) => {
+        VALUES ('${req.body.user}', '${req.body.pass}', '${req.body.currentDate}');`, (err, data) => {
+        if (err) throw err;
+        res.send(data);
+    })
+})
+
+router.put('/nomnom/user/:uid', (req, res) => {
+    console.log(req.body)
+    connection.query(`
+    UPDATE meal_planner.users
+    SET last_logged = '${req.body.currentDate}'
+    WHERE id = '${req.params.uid}';` , (err, data) => {
         if (err) throw err;
         res.send(data);
     })
