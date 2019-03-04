@@ -10,22 +10,20 @@ class Meals extends Component {
     state = {
         allMeals : [], 
         mealPlan: [], //max 7
-        welcomeMessage: ['Hope your hungry!', 'Let\'s get cookin!', 'I can\'t wait to eat!', 'This week\'s meals look great!']
+        welcomeMessage: ['Hope your hungry!', 'Let\'s get cookin!', 'This week\'s meals look great!'],
+        updateMeals: this.props.updateMeals,
     }
 
-    constructor(props){
-        super(props)
-     }
+    // constructor(props){
+    //     super(props)
+    //  }
 
     componentDidMount() {
         this.getAllMeals()
     }
 
-    // componentDidUpdate() {
-    //     this.getMealPlan()
-    // }
-
-    getAllMeals() {
+    getAllMeals() { // get all meals for the user with the user id from props
+        console.log(this.props.user)
         API.getAllMeals(this.props.user[0].id)
             .then(res => 
                 this.setState({allMeals: res.data, }, () => {
@@ -36,14 +34,26 @@ class Meals extends Component {
     }
 
     shuffleMeals(array) {
-        // console.log(array.sort(() => Math.random() - 0.5))
         return array.sort(() => Math.random() - 0.5); 
     } 
 
     getMealPlan() {
-        //! TODO: if local storage has meal plan && if new week
-        let meals = this.shuffleMeals(this.state.allMeals).slice(0, 7); 
-        this.setState({mealPlan: meals}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
+        if(this.state.updateMeals || !this.props.user[0].meals_list) { // if checkDate determined a new meal plan is needed, create a new meal plan
+            let meals = this.shuffleMeals(this.state.allMeals).slice(0, 7); 
+            this.setState({mealPlan: meals}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
+        } else { // if no new meal plan is needed, display the user's current meal plan
+            let activeMealPlan = this.props.user[0].meals_list.split(","); 
+            console.log(activeMealPlan); 
+            let currentMeals = [];
+            activeMealPlan.forEach(mealId => {
+                console.log(mealId); 
+                let meal = this.state.allMeals.filter(meal => {
+                    return meal.id === parseInt(mealId);
+                }); 
+                currentMeals.push(...meal);
+            })
+            this.setState({mealPlan: currentMeals}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
+        }
     }
 
     reorderMealPlan(pos1, pos2) {
@@ -60,7 +70,7 @@ class Meals extends Component {
         console.log(e.target); 
         e.target.classList.add('selected');
         if (swap.length < 2) {swap.push(e.target.dataset.day)}
-        if (swap.length == 2) {
+        if (swap.length === 2) {
             console.log('ready')
             console.log(swap[0], swap[1]);
             this.reorderMealPlan(swap[0], swap[1])
@@ -114,6 +124,11 @@ class Meals extends Component {
         this.setState({mealPlan: freshShuffle}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
     }
 
+    emailList() {
+        console.log(this.state.mealPlan);
+
+    }
+
 
     render() {
         return (
@@ -124,8 +139,8 @@ class Meals extends Component {
                         <div className="meal-plan">
                             <img src={logo} alt="logo" />
                             <h1 className='title'>Welcome {this.props.user[0].user}!</h1>
-                            <p className='loaded'>Loaded 7 out of {this.state.allMeals.length} total meals</p>
-                            <p className='welcome'>"{this.state.welcomeMessage[Math.floor(Math.random() * 4)]}" </p>
+                            <p className='loaded'>Loaded {this.state.mealPlan.length} out of {this.state.allMeals.length} total meals</p>
+                            <p className='welcome'>"{this.state.welcomeMessage[Math.floor(Math.random() * 3)]}" </p>
                             <ul className="display">
                                 {
                                     this.state.mealPlan.map( (meal, index) => {
@@ -138,6 +153,10 @@ class Meals extends Component {
                                 <button className="edit" onClick={() => this.enableEdits()}>Edit</button>
                                 <button className="shuffle" onClick={() => this.shufflePlan()}>Shuffle</button>
                                 <button className="createNew"><a href="/add-meal">Add Meal</a></button>
+                            </div>
+
+                            <div className="actions special-actions">
+                                <button className="email" onClick={() => this.emailList()}>Email</button>
                             </div>
                         </div>
 

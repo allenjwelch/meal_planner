@@ -9,14 +9,17 @@ export default {
     getUserById: function(uid) {
         return axios.get(`/nomnom/user/${uid}`)
     },
-    postNewUser: function(user, pass) {
-        return axios.post(`/nomnom/user/register`, {user, pass})
+    postNewUser: function(user, pass, currentDate) {
+        return axios.post(`/nomnom/user/register`, {user, pass, currentDate})
     },
-    updateLoginDate: function() {
-        //todo
+    updateLoginDate: function(uid, currentDate) {
+        return axios.get(`/nomnom/user/${uid}`, {currentDate}); 
     },
     getAllMeals: function(uid) {
         console.log(uid)
         return axios.get(`/nomnom/meals/${uid}`);
+    },
+    postNewMeal: function(uid, newMeal) {
+        return axios.post(`/nomnom/meals/new-meal`, {uid, newMeal})
     }
 };
