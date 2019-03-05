@@ -5,9 +5,9 @@ import MediaQuery from 'react-responsive';
 
 class Header extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     state = {
         showDropdown: 'hidden'
