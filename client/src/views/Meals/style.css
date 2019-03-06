@@ -129,6 +129,29 @@
     left: 0; 
     right: 0; 
     background: #fff;
+    padding: 60px 40px 40px;
+    text-align: left;
+    overflow-y: scroll; 
+}
 
+#close-modal {
+    filter: brightness(70%);
+    position: fixed; 
+    top: 20px; 
+    right: 35px;
+    height: 60px; 
+    cursor: pointer;
+}
+
+#list-modal .meal ul {
+    text-decoration: underline;
+    font: 700 24px 'Lato', sans-serif;  
+    padding: 0;
+    margin: 10px;
+}
+
+#list-modal .meal li {
+    font: 400 18px 'Lato', sans-serif; 
+    padding: 5px 0 0 10px; 
 }
 
