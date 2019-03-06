@@ -124,9 +124,41 @@ class Meals extends Component {
         this.setState({mealPlan: freshShuffle}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
     }
 
-    emailList() {
+    viewList() {
         console.log(this.state.mealPlan);
+        let shoppingList = document.createElement('div');
+        let modal = document.getElementById('list-modal'); 
+        let close = document.createElement('div');
+        this.state.mealPlan.forEach(meal => {
+            let recipe = document.createElement('div'); 
+                recipe.classList.add('meal');
+            let mealName = document.createElement('h2');
+                mealName.innerHTML = meal.meal; 
+            let ingred1 = document.createElement('p'); 
+                ingred1.innerHTML = meal.ingred1;
+                // ingred1.innerHTML = 'testing';
+            let ingred2 = document.createElement('p'); 
+                ingred2.innerHTML = meal.ingred2;
+                // ingred2.innerHTML = 'testing again';
+            let ingred3 = document.createElement('p');
+                ingred3.innerHTML = meal.ingred3;
+            let ingred4 = document.createElement('p'); 
+                ingred4.innerHTML = meal.ingred4;
+            let ingred5 = document.createElement('p')
+                ingred5.innerHTML = meal.ingred5;
 
+            recipe.appendChild(mealName);  
+            recipe.appendChild(ingred1);  
+            recipe.appendChild(ingred2);  
+            recipe.appendChild(ingred3);  
+            recipe.appendChild(ingred4);  
+            recipe.appendChild(ingred5);  
+            shoppingList.appendChild(recipe); 
+        })
+        
+        console.log(shoppingList); 
+        modal.appendChild(shoppingList);
+        modal.classList.add('active'); 
     }
 
 
@@ -156,7 +188,8 @@ class Meals extends Component {
                             </div>
 
                             <div className="actions special-actions">
-                                <button className="email" onClick={() => this.emailList()}>Email</button>
+                                <div id="list-modal"></div>
+                                <button className="shopping-list-trigger" onClick={() => this.viewList()}>Shopping List</button>
                             </div>
                         </div>
 
