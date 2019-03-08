@@ -8,15 +8,6 @@ router.get("/", (req, res) => {
         if (err) throw err;
         res.send(data);
     }); 
-    
-    // TESTING ------
-    // res.send([
-    //     {
-    //         id: 1,
-    //         name: "user 1", 
-    //     }, 
- 
-    // ]);
 });
 
 router.get('/:uid', (req, res) => {
@@ -45,7 +36,7 @@ router.post('/register', (req, res) => {
         if (err) throw err;
 
         connection.query(`
-            SELECT * FROM meal_planner.users WHERE user = '${req.body.user}'`, function(err, result) {
+            SELECT * FROM users WHERE user = '${req.body.user}'`, function(err, result) {
             if (err) {
                 console.log(err);
                 return connection.rollback(function() {
@@ -68,7 +59,7 @@ router.post('/register', (req, res) => {
             } else {
                 console.log('User does NOT exist')
                 connection.query(`
-                    INSERT IGNORE INTO users(user, password, last_logged) 
+                    INSERT INTO users(user, password, last_logged) 
                     VALUES ('${req.body.user}', '${req.body.pass}', '${req.body.currentDate}');`, (err, data) => {
                     if (err) throw err;
                     res.send(data);
@@ -89,10 +80,10 @@ router.post('/register', (req, res) => {
 })
 
 router.put('/:uid', (req, res) => {
-    console.log('----UPDATING DATE ----')
-    console.log(req.body)
+    // console.log('----UPDATING DATE ----')
+    // console.log(req.body)
     connection.query(`
-    UPDATE meal_planner.users
+    UPDATE users
     SET last_logged = '${req.body.currentDate}'
     WHERE id = '${req.params.uid}';` , (err, data) => {
         if (err) throw err;
