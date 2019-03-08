@@ -97,23 +97,6 @@ class Meals extends Component {
         meals.forEach(node => {
             node.classList.add('editing'); 
             node.style.pointerEvents = "auto";
-            // node.addEventListener('click', selectSwap)               
-            // node.addEventListener('click', (e) => {
-            //     if (swap.length < 2) {swap.push(e.target.dataset.day)}
-            //     if (swap.length == 2) {
-            //         console.log('ready')
-            //         console.log(swap[0], swap[1]);
-            //         if (swap[0] == swap[1]) {
-            //             console.log('delete and fetch new meal')
-            //         } else {
-            //             this.reorderMealPlan(swap[0], swap[1])
-            //             swap = []; 
-            //             console.log(swap); 
-            //             this.disableEdits(); 
-            //         }
-            //     }
-            // })
-
         })
         console.log(meals); 
     }
@@ -131,7 +114,6 @@ class Meals extends Component {
     shufflePlan() {
         console.log('shuffling...'); 
         let freshShuffle = this.shuffleMeals(this.state.mealPlan); 
-        // document.querySelector('display').removeChild('li'); 
         this.setState({mealPlan: freshShuffle}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
     }
 

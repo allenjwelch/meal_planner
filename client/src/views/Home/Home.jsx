@@ -29,11 +29,6 @@ class Home extends Component {
 
         let testdate = new Date('2019-03-04T00:00:35.157Z'); 
         console.log(testdate);
-        
-        // let weekday = new Date(); 
-        // weekday = weekday.getDay();
-        // console.log(weekday); 
-        // console.log(date);
     }
 
     checkDate() { // checks user's last login date to determine if a new meal plan is needed
@@ -68,7 +63,6 @@ class Home extends Component {
             console.log('posting new user...')
             API.postNewUser(user, pass, currentDate)
                 .then(res => {
-                    // console.log(res.data)  
                     if(!res.data) {
                         console.log('nope..')
                         document.getElementById('user-invalid').innerHTML = 'Username is already in use'; 

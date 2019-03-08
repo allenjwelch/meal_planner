@@ -96,14 +96,3 @@
     color: #551A8B; 
 }
 
-.special-actions button {
-    width: 90%;
-    max-width: 400px;
-    background: #7ea0b9;
-    border: 2px solid #7ea0b9;
-}
-
-.special-actions button:hover  {
-    color: #7ea0b9;
-    background: #fff;
-}

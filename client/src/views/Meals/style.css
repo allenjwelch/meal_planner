@@ -73,27 +73,23 @@
 
 .display li:hover {
     transform: scale(1.02);
-    box-shadow: 0 0 30px #a9da84;
+    /* box-shadow: 0 0 30px #a9da84; */
 }
 
 .display li.editing {
-    /* animation: edit infinite .5s; */
-    background: #ebffda;
-    box-shadow: 0 0 30px #8db66e;
+    /* background: #ebffda; */
+    box-shadow: 0 0 20px #79a05c;
 }
 
 .display li.editing.selected {
-    /* transform: scale(1.1); */
     background: #a9da84;
     color: #fff;
-    text-shadow: 0 2px 2px #333;
-
-    /* text-shadow: 0 2px 2px #333; */
+    text-shadow: 0 1px 1px #333;
 }
 
 .display li.editing.selected:after {
     color: #fff;
-    text-shadow: 0 2px 2px #333;
+    text-shadow: 0 1px 1px #333;
 }
 
 .actions button {
@@ -148,13 +144,25 @@
 }
 
 .shuffle {
-    background: #758b7f; 
-    border: 2px solid #758b7f; 
+    background: #5ba066; 
+    border: 2px solid #5ba066; 
 }
 
 .shuffle:hover {
     background: #fff; 
+    color: #5ba066;
+}
+
+.special-actions button {
+    width: 90%;
+    max-width: 400px;
+    background: #758b7f;
+    border: 2px solid #758b7f;
+}
+
+.special-actions button:hover  {
     color: #758b7f;
+    background: #fff;
 }
 
 
