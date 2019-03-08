@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import API from '../../utils/API';
 import logo from '../../logo.png';
+import closeIcon from '../../close.png';
 
 import './style.css';
 
@@ -68,8 +69,18 @@ class Meals extends Component {
     selectSwap(e) {
         console.log('clicked'); 
         console.log(e.target); 
-        e.target.classList.add('selected');
-        if (swap.length < 2) {swap.push(e.target.dataset.day)}
+        let day; 
+        if(!e.target.dataset.day) {
+            day = e.target.parentElement.dataset.day; 
+            e.target.parentElement.classList.add('selected');
+            console.log(day); 
+        } else {
+            day = e.target.dataset.day; 
+            e.target.classList.add('selected');
+            console.log(day); 
+
+        }
+        if (swap.length < 2) {swap.push(day)}
         if (swap.length === 2) {
             console.log('ready')
             console.log(swap[0], swap[1]);
@@ -79,7 +90,7 @@ class Meals extends Component {
         }
     }
 
-    enableEdits() {
+    enableSwap() {
         console.log('editing...');
         let meals = document.querySelectorAll('.display li'); 
         // let swap = [];  
@@ -128,23 +139,30 @@ class Meals extends Component {
         console.log(this.state.mealPlan);
         let shoppingList = document.createElement('div');
         let modal = document.getElementById('list-modal'); 
-        let close = document.createElement('div');
+        let close = document.createElement('img');
+            // close.innerHTML = 'X'; 
+            close.setAttribute('id', 'close-modal'); 
+            close.setAttribute('src', closeIcon);
+            close.addEventListener('click', this.closeModal); 
+            console.log(close); 
+            // src={logo} alt="logo"
+
         this.state.mealPlan.forEach(meal => {
             let recipe = document.createElement('div'); 
                 recipe.classList.add('meal');
-            let mealName = document.createElement('h2');
+            let mealName = document.createElement('ul');
                 mealName.innerHTML = meal.meal; 
-            let ingred1 = document.createElement('p'); 
+            let ingred1 = document.createElement('li'); 
                 ingred1.innerHTML = meal.ingred1;
                 // ingred1.innerHTML = 'testing';
-            let ingred2 = document.createElement('p'); 
+            let ingred2 = document.createElement('li'); 
                 ingred2.innerHTML = meal.ingred2;
                 // ingred2.innerHTML = 'testing again';
-            let ingred3 = document.createElement('p');
+            let ingred3 = document.createElement('li');
                 ingred3.innerHTML = meal.ingred3;
-            let ingred4 = document.createElement('p'); 
+            let ingred4 = document.createElement('li'); 
                 ingred4.innerHTML = meal.ingred4;
-            let ingred5 = document.createElement('p')
+            let ingred5 = document.createElement('li')
                 ingred5.innerHTML = meal.ingred5;
 
             recipe.appendChild(mealName);  
@@ -157,10 +175,21 @@ class Meals extends Component {
         })
         
         console.log(shoppingList); 
+        modal.appendChild(close);
         modal.appendChild(shoppingList);
         modal.classList.add('active'); 
+
+
     }
 
+    closeModal() {
+        console.log('closing...');
+        let modal = document.getElementById('list-modal');
+        modal.classList.remove('active'); 
+        while(modal.firstChild){
+            modal.removeChild(modal.firstChild);
+        }
+    }
 
     render() {
         return (
@@ -176,15 +205,15 @@ class Meals extends Component {
                             <ul className="display">
                                 {
                                     this.state.mealPlan.map( (meal, index) => {
-                                        return <li key={meal.id} data-day={index} onClick={this.selectSwap.bind(this)}>{meal.meal}</li>
+                                        return <li key={meal.id} data-day={index} onClick={this.selectSwap.bind(this)}><span>{meal.meal}</span></li>
                                     })
                                 }
                             </ul>
 
                             <div className="actions">
-                                <button className="edit" onClick={() => this.enableEdits()}>Edit</button>
-                                <button className="shuffle" onClick={() => this.shufflePlan()}>Shuffle</button>
+                                <button className="swap" onClick={() => this.enableSwap()}>Swap</button>
                                 <button className="createNew"><a href="/add-meal">Add Meal</a></button>
+                                <button className="shuffle" onClick={() => this.shufflePlan()}>Shuffle</button>
                             </div>
 
                             <div className="actions special-actions">
