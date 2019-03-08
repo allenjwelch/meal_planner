@@ -69,8 +69,18 @@ class Meals extends Component {
     selectSwap(e) {
         console.log('clicked'); 
         console.log(e.target); 
-        e.target.classList.add('selected');
-        if (swap.length < 2) {swap.push(e.target.dataset.day)}
+        let day; 
+        if(!e.target.dataset.day) {
+            day = e.target.parentElement.dataset.day; 
+            e.target.parentElement.classList.add('selected');
+            console.log(day); 
+        } else {
+            day = e.target.dataset.day; 
+            e.target.classList.add('selected');
+            console.log(day); 
+
+        }
+        if (swap.length < 2) {swap.push(day)}
         if (swap.length === 2) {
             console.log('ready')
             console.log(swap[0], swap[1]);
@@ -80,7 +90,7 @@ class Meals extends Component {
         }
     }
 
-    enableEdits() {
+    enableSwap() {
         console.log('editing...');
         let meals = document.querySelectorAll('.display li'); 
         // let swap = [];  
@@ -195,15 +205,15 @@ class Meals extends Component {
                             <ul className="display">
                                 {
                                     this.state.mealPlan.map( (meal, index) => {
-                                        return <li key={meal.id} data-day={index} onClick={this.selectSwap.bind(this)}>{meal.meal}</li>
+                                        return <li key={meal.id} data-day={index} onClick={this.selectSwap.bind(this)}><span>{meal.meal}</span></li>
                                     })
                                 }
                             </ul>
 
                             <div className="actions">
-                                <button className="edit" onClick={() => this.enableEdits()}>Edit</button>
-                                <button className="shuffle" onClick={() => this.shufflePlan()}>Shuffle</button>
+                                <button className="swap" onClick={() => this.enableSwap()}>Swap</button>
                                 <button className="createNew"><a href="/add-meal">Add Meal</a></button>
+                                <button className="shuffle" onClick={() => this.shufflePlan()}>Shuffle</button>
                             </div>
 
                             <div className="actions special-actions">

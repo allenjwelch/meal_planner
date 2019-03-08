@@ -29,17 +29,17 @@ CREATE TABLE meals (
 -- DEMO DATA
 INSERT INTO users(user, password, last_logged, meals_list) VALUES ('demo', 'demo', 'Sun Mar 03 2019 15:18:16 GMT-0500', '1,2,3,4,5,6,7');
 
-INSERT INTO meals(user_id, meal, prep_time)
-VALUES (1, 'Vegetarian Chili', 45 ), 
-(1, 'Tofu Stir Fry', 30 ),
-(1, 'Soup and Salad', 30 ),
-(1, 'Veggie Burgers', 45 ),
-(1, 'Taco Salads', 20 ),
-(1, 'Veggetti', 35 ),
-(1, 'Homemade Pizza', 45 ),
-(1, 'Buffalo Cauliflower', 30 ),
-(1, 'Wildcard! (takout)', 20 ),
-(1, 'Tofu Tikka Masala', 60 );
+INSERT INTO meals(user_id, meal, prep_time, ingred1, ingred2, ingred3, ingred4, ingred5)
+VALUES (1, 'Vegetarian Chili', 45, 'Kidney beans', 'Chili beans' , 'Pinto beans', 'Crushed Tomatoes', 'Jalapeno'), 
+(1, 'Tofu Stir Fry', 30 , 'Tofu', 'Broccoli', 'Mushrooms', 'Onion', 'Red pepper'),
+(1, 'Soup and Salad', 30 , 'Soup mix', 'Kidney beans', 'Spinach', '', ''),
+(1, 'Veggie Burgers', 45 , 'Mushrooms', 'Onion', 'Nutritional yeast', '', ''),
+(1, 'Taco Salads', 20 , 'Salsa', 'Soy protein', 'Cheese', 'Greek Yogurt', ''),
+(1, 'Veggetti', 35 , 'Zucchini', 'Crushed Tomatoes', 'Artichokes', 'Capers', ''),
+(1, 'Homemade Pizza', 45 , 'Dough', 'Cheese', 'Pizza sauce', '', ''),
+(1, 'Buffalo Cauliflower', 30 , 'Caulifower', 'Buffalo sauce', 'Breadcrumbs', '', ''),
+(1, 'Wildcard! (takout)', 20 , 'Menu', 'Phone/Internet', '', '', ''),
+(1, 'Tofu Tikka Masala', 60 , 'Tofu', 'Basmati rice', 'Crushed Tomatoes', '', '');
 
 SELECT * FROM meal_planner.meals;
 SELECT * FROM meal_planner.users;
@@ -64,3 +64,5 @@ FROM meal_planner.meals
 WHERE meals.user_id = 1;
 
 -- UPDATE `meal_planner`.`users` SET `meals_list`='1,2,3,4,5,6,7' WHERE `id`='1';
+
+DELETE FROM meal_planner.meals WHERE user_id=1;

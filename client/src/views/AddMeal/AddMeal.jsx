@@ -46,11 +46,19 @@ class AddMeal extends Component {
                 }
     
                 API.postNewMeal(this.state.userID, newMeal)
-                    .then(res => 
-                        console.log('resdata: ', res.data))
-                    .then(document.querySelector('form').reset())
-                    .then(document.getElementById('invalid-time').innerHTML= '')
-                    .then(document.getElementById('success').innerHTML = 'Great! You\'ve just added a new meal!')
+                    .then(res => {
+                        // console.log('resdata: ', res.data)
+                        if(!res.data) {
+                            document.getElementById('invalid-time').innerHTML= ''; 
+                            document.getElementById('success').innerHTML = ''; 
+                            document.getElementById('fail').innerHTML = 'It looks like that meal by that name was already added'; 
+                        } else {
+                            document.querySelector('form').reset();
+                            document.getElementById('invalid-time').innerHTML= '';
+                            document.getElementById('fail').innerHTML = ''; 
+                            document.getElementById('success').innerHTML = 'Great! You\'ve just added a new meal!'; 
+                        }
+                    })
                     .catch(err => console.log(err))
     
                 console.log(newMeal); 
@@ -93,6 +101,7 @@ class AddMeal extends Component {
                             </div>
                             <div id="invalid-time"></div>
                             <div id="success"></div>
+                            <div id="fail"></div>
                         </form>
 
                         <div className="actions">

@@ -90,11 +90,17 @@ form button:focus {
     height: 40px;
     padding: 5px;
     border-radius: 8px;
-    background: rgb(131, 129, 11); 
+    background: #83810b; 
+    border: 1px solid #83810b; 
     color: #fff;
     font-size: 18px;
     font-weight: 700;
     cursor: pointer;
+}
+
+.signout-btn:hover  {
+    color: #83810b; 
+    background: #fff;
 }
 
 .signout-btn:focus {

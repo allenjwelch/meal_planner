@@ -67,13 +67,18 @@ class Home extends Component {
         if (this.state.newUser) {
             console.log('posting new user...')
             API.postNewUser(user, pass, currentDate)
-                .then(res => 
+                .then(res => {
                     // console.log(res.data)  
-                    this.setState({user: res.data, }, () => {
-                        console.log(this.state.user, "state.user");
-                        localStorage.setItem('user', this.state.user[0].id) 
-                    }) 
-                ).catch(err => console.log(err))
+                    if(!res.data) {
+                        console.log('nope..')
+                        document.getElementById('user-invalid').innerHTML = 'Username is already in use'; 
+                    } else {
+                        this.setState({user: res.data, }, () => {
+                            console.log(this.state.user, "state.user");
+                            localStorage.setItem('user', this.state.user[0].id) 
+                        }) 
+                    }
+                }).catch(err => console.log(err))
             } else {
             console.log(user, pass)
             API.getUserByName(user, pass) 
@@ -90,6 +95,7 @@ class Home extends Component {
 
     updateLastLogin(currentDay) { // modifies user info and updates with current date for last login
         console.log(this.state.user); 
+        console.log(currentDay); 
         API.updateLoginDate(this.state.user[0].id, currentDay)
             .then(res => {
                 console.log(res.data)
