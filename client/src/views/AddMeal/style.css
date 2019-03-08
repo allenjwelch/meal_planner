@@ -64,19 +64,46 @@
     color: #0B8343;
     font-size: 18px;    
 }
+
+#fail {
+    margin: 20px auto; 
+    color: rgb(199, 37, 37);
+    font-size: 18px;    
+}
+
 .actions .add {
     background: #0B8343; 
+    border:2px solid #0B8343; 
+}
+
+.actions .add:hover  {
+    color: #0B8343;
+    background: #fff;
 }
 
 .actions .cancel {
+    background: #DDDDDD; 
+    border: 2px solid #bbb; 
+}
 
+.actions .cancel:hover, .actions .cancel:hover a {
+    background: #551A8B; 
+    color: #DDDDDD;
 }
 
 .actions .cancel a {
     text-decoration: none; 
+    color: #551A8B; 
 }
 
 .special-actions button {
     width: 90%;
-    background: rgb(65, 132, 177);
+    max-width: 400px;
+    background: #7ea0b9;
+    border: 2px solid #7ea0b9;
+}
+
+.special-actions button:hover  {
+    color: #7ea0b9;
+    background: #fff;
 }

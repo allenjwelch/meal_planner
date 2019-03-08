@@ -13,7 +13,7 @@ export default {
         return axios.post(`/nomnom/user/register`, {user, pass, currentDate})
     },
     updateLoginDate: function(uid, currentDate) {
-        return axios.get(`/nomnom/user/${uid}`, {currentDate}); 
+        return axios.put(`/nomnom/user/${uid}`, {currentDate}); 
     },
     getAllMeals: function(uid) {
         console.log(uid)

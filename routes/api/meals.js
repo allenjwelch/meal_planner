@@ -13,7 +13,7 @@ router.get("/:uid", (req, res) => {
         FROM meal_planner.meals
         WHERE meals.user_id = ${req.params.uid};`, function(err, data) {
         if (err) throw err;
-        console.log(data);
+        // console.log(data);
         res.send(data); 
     }); 
 });
@@ -21,19 +21,72 @@ router.get("/:uid", (req, res) => {
 router.post('/new-meal', (req, res) => {
     console.log('API hit')
     console.log(req.body)
-    connection.query(`
-        INSERT IGNORE INTO meals(user_id, meal, prep_time, ingred1, ingred2, ingred3, ingred4, ingred5) 
-        VALUES ('${req.body.uid}', 
-        '${req.body.newMeal.meal}', 
-        '${req.body.newMeal.prep_time}', 
-        '${req.body.newMeal.ingred1}', 
-        '${req.body.newMeal.ingred2}', 
-        '${req.body.newMeal.ingred3}', 
-        '${req.body.newMeal.ingred4}', 
-        '${req.body.newMeal.ingred5}');`, (err, data) => {
+
+    connection.beginTransaction(function(err) {
         if (err) throw err;
-        res.send(data);
-    })
+
+        connection.query(`
+            SELECT * FROM meal_planner.meals WHERE meal = '${req.body.newMeal.meal}'`, function(err, result) {
+            if (err) {
+                console.log(err);
+                return connection.rollback(function() {
+                  throw err;
+                });
+            }
+
+            if (result.length > 0) {
+                console.log('Meal Exists')
+                connection.commit(function(err) {
+                    if (err) {
+                      return connection.rollback(function() {
+                        throw err;
+                      });
+                    }
+                });
+                // res.json()
+                res.end();
+                return;
+            } else {
+                console.log('Meal does NOT exist')
+                connection.query(`
+                    INSERT INTO meal_planner.meals(user_id, meal, prep_time, ingred1, ingred2, ingred3, ingred4, ingred5) 
+                    VALUES ('${req.body.uid}', 
+                    '${req.body.newMeal.meal}', 
+                    '${req.body.newMeal.prep_time}', 
+                    '${req.body.newMeal.ingred1}', 
+                    '${req.body.newMeal.ingred2}', 
+                    '${req.body.newMeal.ingred3}', 
+                    '${req.body.newMeal.ingred4}', 
+                    '${req.body.newMeal.ingred5}');`, (err, data) => {
+                    if (err) throw err;
+                    res.send(data);
+
+                    connection.commit(function(err) {
+                        if (err) {
+                            console.log(err);
+                            return connection.rollback(function() {
+                                throw err;
+                            });
+                        }
+                        console.log('success!');
+                    });
+                })
+            }
+
+        }); 
+
+        connection.commit(function(err) {
+            if (err) {
+              return connection.rollback(function() {
+                throw err;
+              });
+            }
+        });
+
+    }); 
+
+
+    
 })
 
 module.exports = router;
