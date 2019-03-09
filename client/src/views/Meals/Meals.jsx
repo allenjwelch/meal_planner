@@ -194,7 +194,7 @@ class Meals extends Component {
 
                             <div className="actions">
                                 <button className="swap" onClick={() => this.enableSwap()}>Swap</button>
-                                <button className="createNew"><a href="/add-meal">Add Meal</a></button>
+                                <button className="createNew"><a href="/meals/add">Add Meal</a></button>
                                 <button className="shuffle" onClick={() => this.shufflePlan()}>Shuffle</button>
                             </div>
 

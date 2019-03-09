@@ -18,7 +18,7 @@ router.get("/:uid", (req, res) => {
     }); 
 });
 
-router.post('/new-meal', (req, res) => {
+router.post('/new', (req, res) => {
     console.log('API hit')
     console.log(req.body)
 

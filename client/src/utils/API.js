@@ -20,6 +20,6 @@ export default {
         return axios.get(`/nomnom/meals/${uid}`);
     },
     postNewMeal: function(uid, newMeal) {
-        return axios.post(`/nomnom/meals/new-meal`, {uid, newMeal})
+        return axios.post(`/nomnom/meals/new`, {uid, newMeal})
     }
 };
