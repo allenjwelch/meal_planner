@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import API from '../../utils/API';
 import logo from '../../logo.png';
 import closeIcon from '../../close.png';
+import { Link } from "react-router-dom";
 
 import './style.css';
 
@@ -194,7 +195,9 @@ class Meals extends Component {
 
                             <div className="actions">
                                 <button className="swap" onClick={() => this.enableSwap()}>Swap</button>
-                                <button className="createNew"><a href="/meals/add">Add Meal</a></button>
+                                <button className="createNew">
+                                    <Link to="/add">Add Meal</Link>
+                                </button>                                
                                 <button className="shuffle" onClick={() => this.shufflePlan()}>Shuffle</button>
                             </div>
 
@@ -208,7 +211,9 @@ class Meals extends Component {
                     : <div className="no-meals">
                         <img src={logo} className="logo blank-page" alt="logo" />
                         <h1>No Meals</h1>
-                        <button className="createNew"><a href="/add-meal">Add Meal</a></button>
+                        <button className="createNew">
+                            <Link to="/add">Add Meal</Link>
+                        </button>
                     </div>
                 }
             </section>
