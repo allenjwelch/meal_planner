@@ -9,12 +9,10 @@ class App extends Component {
     render() {
         return (
             <Router>
-    {/* <Route exact path="/user" render={(props) => this.props.auth.isAuthenticated() ? <UserProfile {...this.props}/> : <Home/>} /> */}
-
                 <div className="app">
                     <Switch>
                         <Route exact path="/" component={Home} />
-                        <Route exact path="/add-meal" render={() => <AddMeal/>} />
+                        <Route path="/add-meal" component={AddMeal} />
                         <Route component={Home}/>
                     </Switch>
                     <Footer />
