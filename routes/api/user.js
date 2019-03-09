@@ -91,4 +91,14 @@ router.put('/:uid', (req, res) => {
     })
 })
 
+router.put('/meals/:uid', (req, res) => {
+    connection.query(`
+    UPDATE users
+    SET meals_list = '${req.body.currentMealPlan}'
+    WHERE id = '${req.params.uid}';` , (err, data) => {
+        if (err) throw err;
+        res.send(data);
+    })
+})
+
 module.exports = router;

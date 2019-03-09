@@ -15,11 +15,14 @@ export default {
     updateLoginDate: function(uid, currentDate) {
         return axios.put(`/nomnom/user/${uid}`, {currentDate}); 
     },
+    updateMealPlan: function(uid, currentMealPlan) {
+        return axios.put(`/nomnom/user/meals/${uid}`, {currentMealPlan}); 
+    },
     getAllMeals: function(uid) {
         console.log(uid)
         return axios.get(`/nomnom/meals/${uid}`);
     },
     postNewMeal: function(uid, newMeal) {
         return axios.post(`/nomnom/meals/new`, {uid, newMeal})
-    }
+    },
 };

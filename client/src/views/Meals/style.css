@@ -102,6 +102,7 @@
     padding: 10px;
     color: #fff; 
     cursor: pointer;
+    width: 90%;
 }
 
 .actions button:focus {
@@ -155,6 +156,7 @@
 
 .special-actions button {
     width: 90%;
+    height: 65px;
     max-width: 400px;
     background: #758b7f;
     border: 2px solid #758b7f;
@@ -226,3 +228,12 @@
     padding: 5px 0 0 10px; 
 }
 
+@media (min-width: 500px) {
+    .actions button {
+        width: 28%;
+    }
+
+    .special-actions button {
+        width: 90%;
+    }
+}

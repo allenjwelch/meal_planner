@@ -27,8 +27,8 @@ class Home extends Component {
             console.log(this.state.currentDate); 
         })
 
-        let testdate = new Date('2019-03-04T00:00:35.157Z'); 
-        console.log(testdate);
+        // let testdate = new Date('2019-03-04T00:00:35.157Z'); 
+        // console.log(testdate);
     }
 
     checkDate() { // checks user's last login date to determine if a new meal plan is needed
@@ -67,12 +67,18 @@ class Home extends Component {
                         console.log('nope..')
                         document.getElementById('user-invalid').innerHTML = 'Username is already in use'; 
                     } else {
-                        this.setState({user: res.data, }, () => {
-                            console.log(this.state.user, "state.user");
-                            localStorage.setItem('user', this.state.user[0].id) 
-                        }) 
+                        console.log(res)
                     }
-                }).catch(err => console.log(err))
+                }).then (
+                    API.getUserByName(user, pass) 
+                    .then(res => 
+                        !res.data.length ? document.getElementById('user-invalid').innerHTML = 'Username or password incorrect'
+                        : this.setState({user: res.data, }, () => {
+                            console.log(this.state.user, "state.user");
+                            localStorage.setItem('user', this.state.user[0].id)
+                            this.checkDate()
+                        }) )
+                ).catch(err => console.log(err))
             } else {
             console.log(user, pass)
             API.getUserByName(user, pass) 
@@ -93,7 +99,6 @@ class Home extends Component {
         API.updateLoginDate(this.state.user[0].id, currentDay)
             .then(res => {
                 console.log(res.data)
-                console.log('updated?') //TODO verify that this query is correct
             })
     }
 
@@ -141,11 +146,7 @@ class Home extends Component {
         this.state.newUser ? this.setState({newUser: false }) : this.setState({newUser: true});
     }
 
-    signOut() {
-        this.setState({user: false }, () => {
-            localStorage.removeItem('user')
-        });
-    }
+
 
     render() {
         return (
@@ -155,7 +156,6 @@ class Home extends Component {
                     this.state.user ?
                         <div className = "access">
                             <Meals user={this.state.user} updateMeals={this.state.updateMeals}/>
-                            <button className="signout-btn" onClick={() => this.signOut()}>Sign Out</button>
                         </div>
 
 

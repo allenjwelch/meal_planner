@@ -68,23 +68,21 @@ class Meals extends Component {
     }
 
     selectSwap(e) {
-        console.log('clicked'); 
-        console.log(e.target); 
+        // console.log(e.target); 
         let day; 
         if(!e.target.dataset.day) {
             day = e.target.parentElement.dataset.day; 
             e.target.parentElement.classList.add('selected');
-            console.log(day); 
+            // console.log(day); 
         } else {
             day = e.target.dataset.day; 
             e.target.classList.add('selected');
-            console.log(day); 
-
+            // console.log(day); 
         }
         if (swap.length < 2) {swap.push(day)}
         if (swap.length === 2) {
-            console.log('ready')
-            console.log(swap[0], swap[1]);
+            // console.log('ready')
+            // console.log(swap[0], swap[1]);
             this.reorderMealPlan(swap[0], swap[1])
             swap = []; 
             this.disableEdits()
@@ -99,7 +97,7 @@ class Meals extends Component {
             node.classList.add('editing'); 
             node.style.pointerEvents = "auto";
         })
-        console.log(meals); 
+        // console.log(meals); 
     }
 
     disableEdits() {
@@ -174,6 +172,21 @@ class Meals extends Component {
         }
     }
 
+    signOut() {
+        let currentMealPlan = []; 
+        this.state.mealPlan.forEach(meal => {
+            currentMealPlan.push(meal.id); 
+        })
+        API.updateMealPlan(this.props.user[0].id, currentMealPlan)
+        .then(res => {
+            console.log(res.data)
+            this.setState({user: false }, () => {
+                localStorage.removeItem('user'); 
+                window.location = '/'; 
+            });
+        })   
+    }
+
     render() {
         return (
             <section className="main">
@@ -195,16 +208,19 @@ class Meals extends Component {
 
                             <div className="actions">
                                 <button className="swap" onClick={() => this.enableSwap()}>Swap</button>
+                                <button className="shuffle" onClick={() => this.shufflePlan()}>Shuffle</button>
                                 <button className="createNew">
                                     <Link to="/add">Add Meal</Link>
                                 </button>                                
-                                <button className="shuffle" onClick={() => this.shufflePlan()}>Shuffle</button>
                             </div>
 
                             <div className="actions special-actions">
                                 <div id="list-modal"></div>
                                 <button className="shopping-list-trigger" onClick={() => this.viewList()}>Shopping List</button>
                             </div>
+
+                            <button className="signout-btn" onClick={() => this.signOut()}>Sign Out & Save</button>
+
                         </div>
 
 
@@ -214,6 +230,8 @@ class Meals extends Component {
                         <button className="createNew">
                             <Link to="/add">Add Meal</Link>
                         </button>
+                        <button className="signout-btn" onClick={() => this.signOut()}>Sign Out</button>
+
                     </div>
                 }
             </section>

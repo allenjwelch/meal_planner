@@ -19,7 +19,7 @@ router.get("/:uid", (req, res) => {
 });
 
 router.post('/new', (req, res) => {
-    console.log('API hit')
+    console.log('meals POST hit')
     console.log(req.body)
 
     connection.beginTransaction(function(err) {
