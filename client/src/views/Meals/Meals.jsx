@@ -16,20 +16,15 @@ class Meals extends Component {
         updateMeals: this.props.updateMeals,
     }
 
-    // constructor(props){
-    //     super(props)
-    //  }
-
     componentDidMount() {
         this.getAllMeals()
     }
 
     getAllMeals() { // get all meals for the user with the user id from props
-        console.log(this.props.user)
         API.getAllMeals(this.props.user[0].id)
             .then(res => 
                 this.setState({allMeals: res.data, }, () => {
-                    console.log(this.state.allMeals, "state.allMeals"); 
+                    // console.log(this.state.allMeals, "state.allMeals"); 
                     this.getMealPlan()
                 }))
             .catch(err => console.log(err))
@@ -40,21 +35,28 @@ class Meals extends Component {
     } 
 
     getMealPlan() {
-        if(this.state.updateMeals || !this.props.user[0].meals_list) { // if checkDate determined a new meal plan is needed, create a new meal plan
+        // console.log('Update: ', this.props.updateMeals); 
+        // console.log(this.props.user[0].meals_list); 
+        // console.log(this.props.user[0].meals_list.length); 
+        if(this.props.updateMeals || !this.props.user[0].meals_list || this.props.user[0].meals_list.length < 13) { // if checkDate determined a new meal plan is needed, create a new meal plan
+            console.log('updating meals...');
+            // console.log(this.state.allMeals)
             let meals = this.shuffleMeals(this.state.allMeals).slice(0, 7); 
-            this.setState({mealPlan: meals}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
+            this.setState({mealPlan: meals}, () => {
+                // console.log(this.state.mealPlan, "state.mealPlan")
+            })
         } else { // if no new meal plan is needed, display the user's current meal plan
             let activeMealPlan = this.props.user[0].meals_list.split(","); 
-            console.log(activeMealPlan); 
             let currentMeals = [];
             activeMealPlan.forEach(mealId => {
-                console.log(mealId); 
                 let meal = this.state.allMeals.filter(meal => {
                     return meal.id === parseInt(mealId);
                 }); 
                 currentMeals.push(...meal);
             })
-            this.setState({mealPlan: currentMeals}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
+            this.setState({mealPlan: currentMeals}, () => {
+                // console.log(this.state.mealPlan, "state.mealPlan")
+            })
         }
     }
 
@@ -63,8 +65,10 @@ class Meals extends Component {
         let temp = newMealPlan[pos2]; 
         newMealPlan[pos2] = newMealPlan[pos1]; 
         newMealPlan[pos1] = temp; 
-        console.log(newMealPlan);
-        this.setState({mealPlan: newMealPlan}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
+        // console.log(newMealPlan);
+        this.setState({mealPlan: newMealPlan}, () => {
+            // console.log(this.state.mealPlan, "state.mealPlan")
+        })
     }
 
     selectSwap(e) {
@@ -90,7 +94,7 @@ class Meals extends Component {
     }
 
     enableSwap() {
-        console.log('editing...');
+        // console.log('editing...');
         let meals = document.querySelectorAll('.display li'); 
         // let swap = [];  
         meals.forEach(node => {
@@ -101,7 +105,7 @@ class Meals extends Component {
     }
 
     disableEdits() {
-        console.log('disable!'); 
+        // console.log('disable!'); 
         let meals = document.querySelectorAll('.display li'); 
         meals.forEach(node => {
             node.classList.remove('editing'); 
@@ -111,13 +115,15 @@ class Meals extends Component {
     }
 
     shufflePlan() {
-        console.log('shuffling...'); 
+        // console.log('shuffling...'); 
         let freshShuffle = this.shuffleMeals(this.state.mealPlan); 
-        this.setState({mealPlan: freshShuffle}, () => {console.log(this.state.mealPlan, "state.mealPlan")})
+        this.setState({mealPlan: freshShuffle}, () => {
+            // console.log(this.state.mealPlan, "state.mealPlan")
+        })
     }
 
     viewList() {
-        console.log(this.state.mealPlan);
+        // console.log(this.state.mealPlan);
         let shoppingList = document.createElement('div');
         let modal = document.getElementById('list-modal'); 
         let close = document.createElement('img');
@@ -125,46 +131,76 @@ class Meals extends Component {
             close.setAttribute('id', 'close-modal'); 
             close.setAttribute('src', closeIcon);
             close.addEventListener('click', this.closeModal); 
-            console.log(close); 
+            // console.log(close); 
             // src={logo} alt="logo"
 
-        this.state.mealPlan.forEach(meal => {
+        this.state.mealPlan.forEach((meal, i) => {
             let recipe = document.createElement('div'); 
                 recipe.classList.add('meal');
             let mealName = document.createElement('ul');
                 mealName.innerHTML = meal.meal; 
-            let ingred1 = document.createElement('li'); 
-                ingred1.innerHTML = meal.ingred1;
-                // ingred1.innerHTML = 'testing';
-            let ingred2 = document.createElement('li'); 
-                ingred2.innerHTML = meal.ingred2;
-                // ingred2.innerHTML = 'testing again';
-            let ingred3 = document.createElement('li');
-                ingred3.innerHTML = meal.ingred3;
-            let ingred4 = document.createElement('li'); 
-                ingred4.innerHTML = meal.ingred4;
-            let ingred5 = document.createElement('li')
-                ingred5.innerHTML = meal.ingred5;
+            let ingred1, ingred2, ingred3, ingred4, ingred5, ingred6, ingred7, ingred8; 
 
             recipe.appendChild(mealName);  
-            recipe.appendChild(ingred1);  
-            recipe.appendChild(ingred2);  
-            recipe.appendChild(ingred3);  
-            recipe.appendChild(ingred4);  
-            recipe.appendChild(ingred5);  
+
+            if (meal.ingred1.length > 0) {
+                ingred1 = document.createElement('li'); 
+                ingred1.innerHTML = meal.ingred1;
+                recipe.appendChild(ingred1);  
+            }
+
+            if (meal.ingred2.length > 0) {
+                ingred2 = document.createElement('li'); 
+                ingred2.innerHTML = meal.ingred2;
+                recipe.appendChild(ingred2);  
+            }
+
+            if (meal.ingred3.length > 0) {
+                ingred3 = document.createElement('li');
+                ingred3.innerHTML = meal.ingred3;
+                recipe.appendChild(ingred3);  
+            }
+
+            if (meal.ingred4.length > 0) {
+                ingred4 = document.createElement('li'); 
+                ingred4.innerHTML = meal.ingred4;
+                recipe.appendChild(ingred4);  
+            }
+
+            if (meal.ingred5.length > 0) {
+                ingred5 = document.createElement('li')
+                ingred5.innerHTML = meal.ingred5;
+                recipe.appendChild(ingred5);  
+            }  
+            
+            if (meal.ingred6.length > 0) {
+                ingred6 = document.createElement('li')
+                ingred6.innerHTML = meal.ingred6;
+                recipe.appendChild(ingred6);  
+            } 
+
+            if (meal.ingred7.length > 0) {
+                ingred7 = document.createElement('li')
+                ingred7.innerHTML = meal.ingred7;
+                recipe.appendChild(ingred7);  
+            } 
+
+            if (meal.ingred8.length > 0) {
+                ingred8 = document.createElement('li')
+                ingred8.innerHTML = meal.ingred8;
+                recipe.appendChild(ingred8);  
+            } 
             shoppingList.appendChild(recipe); 
         })
         
-        console.log(shoppingList); 
+        // console.log(shoppingList); 
         modal.appendChild(close);
         modal.appendChild(shoppingList);
         modal.classList.add('active'); 
-
-
     }
 
     closeModal() {
-        console.log('closing...');
+        // console.log('closing...');
         let modal = document.getElementById('list-modal');
         modal.classList.remove('active'); 
         while(modal.firstChild){
@@ -179,7 +215,7 @@ class Meals extends Component {
         })
         API.updateMealPlan(this.props.user[0].id, currentMealPlan)
         .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             this.setState({user: false }, () => {
                 localStorage.removeItem('user'); 
                 window.location = '/'; 

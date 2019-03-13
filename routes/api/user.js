@@ -30,7 +30,7 @@ router.get("/:user/:pass", (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-    console.log(req.body)
+    console.log("POST user data: ", req.body)
 
     connection.beginTransaction(function(err) {
         if (err) throw err;
@@ -80,8 +80,7 @@ router.post('/register', (req, res) => {
 })
 
 router.put('/:uid', (req, res) => {
-    // console.log('----UPDATING DATE ----')
-    // console.log(req.body)
+    console.log("PUT user data: ", req.body)
     connection.query(`
     UPDATE users
     SET last_logged = '${req.body.currentDate}'
@@ -92,6 +91,7 @@ router.put('/:uid', (req, res) => {
 })
 
 router.put('/meals/:uid', (req, res) => {
+    console.log("PUT user data: ", req.body)
     connection.query(`
     UPDATE users
     SET meals_list = '${req.body.currentMealPlan}'
