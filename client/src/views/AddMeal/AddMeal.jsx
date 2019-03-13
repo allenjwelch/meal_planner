@@ -43,6 +43,9 @@ class AddMeal extends Component {
                     ingred3: document.getElementById('meal-ingred-3').value, 
                     ingred4: document.getElementById('meal-ingred-4').value, 
                     ingred5: document.getElementById('meal-ingred-5').value, 
+                    ingred6: document.getElementById('meal-ingred-6').value, 
+                    ingred7: document.getElementById('meal-ingred-7').value, 
+                    ingred8: document.getElementById('meal-ingred-8').value
                 }
     
                 API.postNewMeal(this.state.userID, newMeal)
@@ -98,6 +101,9 @@ class AddMeal extends Component {
                                 <label><input type="text" className="meal-ingreds" id="meal-ingred-3"/></label>
                                 <label><input type="text" className="meal-ingreds" id="meal-ingred-4"/></label>
                                 <label><input type="text" className="meal-ingreds" id="meal-ingred-5"/></label>
+                                <label><input type="text" className="meal-ingreds" id="meal-ingred-6"/></label>
+                                <label><input type="text" className="meal-ingreds" id="meal-ingred-7"/></label>
+                                <label><input type="text" className="meal-ingreds" id="meal-ingred-8"/></label>
                             </div>
                             <div id="invalid-time"></div>
                             <div id="success"></div>

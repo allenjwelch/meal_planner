@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 export default {
 
     getUserByName: function(user, pass) { // just for testing..
@@ -19,7 +18,6 @@ export default {
         return axios.put(`/nomnom/user/meals/${uid}`, {currentMealPlan}); 
     },
     getAllMeals: function(uid) {
-        console.log(uid)
         return axios.get(`/nomnom/meals/${uid}`);
     },
     postNewMeal: function(uid, newMeal) {

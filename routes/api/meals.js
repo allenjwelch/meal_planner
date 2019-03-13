@@ -7,7 +7,7 @@ router.get("/:uid", (req, res) => {
 
     // console.log(req);
     // console.log(req.params);
-    console.log(req.params.uid);
+    console.log("uid:" , req.params.uid);
     connection.query(`
         SELECT * 
         FROM meals
@@ -19,20 +19,23 @@ router.get("/:uid", (req, res) => {
 });
 
 router.post('/new', (req, res) => {
-    console.log('meals POST hit')
-    console.log(req.body)
+    console.log("POST meal data: ", req.body)
 
     connection.beginTransaction(function(err) {
         if (err) throw err;
 
         connection.query(`
-            SELECT * FROM meals WHERE meal = '${req.body.newMeal.meal}'`, function(err, result) {
+            SELECT * FROM meals 
+            WHERE meal = '${req.body.newMeal.meal}' 
+            AND user_id = ${req.body.uid};`, function(err, result) {
             if (err) {
                 console.log(err);
                 return connection.rollback(function() {
                   throw err;
                 });
             }
+
+            console.log(result); 
 
             if (result.length > 0) {
                 console.log('Meal Exists')
@@ -49,7 +52,7 @@ router.post('/new', (req, res) => {
             } else {
                 console.log('Meal does NOT exist')
                 connection.query(`
-                    INSERT INTO meals(user_id, meal, prep_time, ingred1, ingred2, ingred3, ingred4, ingred5) 
+                    INSERT INTO meals(user_id, meal, prep_time, ingred1, ingred2, ingred3, ingred4, ingred5, ingred6, ingred7, ingred8) 
                     VALUES ('${req.body.uid}', 
                     '${req.body.newMeal.meal}', 
                     '${req.body.newMeal.prep_time}', 
@@ -57,7 +60,10 @@ router.post('/new', (req, res) => {
                     '${req.body.newMeal.ingred2}', 
                     '${req.body.newMeal.ingred3}', 
                     '${req.body.newMeal.ingred4}', 
-                    '${req.body.newMeal.ingred5}');`, (err, data) => {
+                    '${req.body.newMeal.ingred5}',
+                    '${req.body.newMeal.ingred6}',
+                    '${req.body.newMeal.ingred7}',
+                    '${req.body.newMeal.ingred8}');`, (err, data) => {
                     if (err) throw err;
                     res.send(data);
 
