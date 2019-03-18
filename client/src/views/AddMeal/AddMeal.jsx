@@ -11,6 +11,7 @@ class AddMeal extends Component {
 
     componentDidMount() {
         this.checkStorage()
+        const { allMeals } = this.props.location.state
     }
 
     checkStorage() {
@@ -70,10 +71,6 @@ class AddMeal extends Component {
             document.getElementById('invalid-time').innerHTML = 'Please enter both a name and prep time for your meal'; 
         }
 
-       
-
-        // document.getElementById('invalid-time').innerHTML= ''; 
-        // document.querySelector('form').reset();
     }
 
     render() {
@@ -115,6 +112,8 @@ class AddMeal extends Component {
                             <button className="cancel"><a href="/">Go Back</a></button>
                         </div>
                     </div>
+
+
                     : <h1>You must be logged in to add a meal</h1>
                 }
             </div>
