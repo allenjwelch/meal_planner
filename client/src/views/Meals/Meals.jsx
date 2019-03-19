@@ -265,10 +265,7 @@ class Meals extends Component {
                         <h1>No Meals</h1>
                         <button className="createNew">
                             <Link to={{
-                                pathname: "/add", 
-                                state: {
-                                    allMeals: allMeals
-                                }
+                                pathname: "/add"
                             }}>Add/Edit Meal</Link>
                         </button>
                         <button className="signout-btn" onClick={() => this.signOut()}>Sign Out</button>

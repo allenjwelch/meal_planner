@@ -7,11 +7,24 @@ class AddMeal extends Component {
 
     state = {
         userID: '',
+        allMeals: [],
     }
 
     componentDidMount() {
         this.checkStorage()
-        const { allMeals } = this.props.location.state
+        
+        // const { allMeals } = this.props.location.state
+        // console.log(this.props.location); 
+    }
+
+    getAllMeals() { // get all meals for the user with the user id from props
+        API.getAllMeals(this.state.userID)
+            .then(res => 
+                this.setState({allMeals: res.data, }, () => {
+                    console.log(this.state.allMeals, "state.allMeals"); 
+                    // this.getMealPlan()
+                }))
+            .catch(err => console.log(err))
     }
 
     checkStorage() {
@@ -20,7 +33,9 @@ class AddMeal extends Component {
             console.log('user:', user); 
             this.setState({ userID : user }, () => {
                 console.log(this.state.userID, "state.userID")
+                this.getAllMeals()
             })
+           
         } else {
             console.log('no user signed in')
         }
