@@ -5,6 +5,11 @@ import Meal from '../../components/Meal';
 import './style.css'; 
 
 class AddMeal extends Component {
+    constructor(props) {
+        super(props); 
+        this.edit = this.edit.bind(this);
+
+    }
 
     state = {
         userID: '',
@@ -92,11 +97,34 @@ class AddMeal extends Component {
 
     edit(e) {
         console.log('editing...')
-        console.log(e.target.parentNode); 
-        // this.setState({ isEditing: true })
+        this.setState({ isEditing: true })
+        let mealID = e.target.parentNode.dataset.mealId;
+        console.log(mealID); 
 
-
+        let mealEdit = this.state.allMeals.filter(meal => meal.id === parseInt(mealID)); 
+        console.log(mealEdit); 
+        document.getElementById('meal-name').value = mealEdit[0].meal; 
+        document.getElementById('meal-name').dataset.mealId = mealEdit[0].id; 
+        document.getElementById('meal-prep').value = mealEdit[0].prep_time;
+        document.getElementById('meal-ingred-1').value = mealEdit[0].ingred1;
+        document.getElementById('meal-ingred-2').value = mealEdit[0].ingred2;
+        document.getElementById('meal-ingred-3').value = mealEdit[0].ingred3;
+        document.getElementById('meal-ingred-4').value = mealEdit[0].ingred4;
+        document.getElementById('meal-ingred-5').value = mealEdit[0].ingred5;
+        document.getElementById('meal-ingred-6').value = mealEdit[0].ingred6;
+        document.getElementById('meal-ingred-7').value = mealEdit[0].ingred7;
+        document.getElementById('meal-ingred-8').value = mealEdit[0].ingred8;
+        document.querySelector('.add-title').scrollIntoView({behavior: "smooth"})
     }
+
+    update() {
+        console.log('updating...'); 
+    }
+
+    delete() {
+        console.log('deleting...'); 
+    }
+
 
     render() {
         return (
@@ -106,7 +134,11 @@ class AddMeal extends Component {
                     this.state.userID ?
 
                     <div className="add-meal-container">
-                        <h1 className="add-title">Add a Meal</h1>
+                    {
+                        this.state.isEditing ? 
+                            <h1 className="add-title">Update a Meal</h1>
+                        :   <h1 className="add-title">Add a Meal</h1>
+                    }
                         <form className="add-meal">
                             <div className="add-left">
                                 <label htmlFor="meal-name">Meal Name</label>
@@ -136,7 +168,7 @@ class AddMeal extends Component {
                                 this.state.isEditing ? 
                                 <div className="actions">
                                     <button className="update" onClick={() => this.update()}>Update Meal</button>
-                                    <button className="cancel"><a href="/">Go Back</a></button>
+                                    <button className="delete" onClick={() => this.delete()}>Delete Meal</button>
                                 </div>
 
                                 : <div className="actions">
@@ -165,6 +197,7 @@ class AddMeal extends Component {
                                         ingred8={meal.ingred8}
                                         prep_time={meal.prep_time}
                                         edit={this.edit}
+                                        // onClick={this.edit()}
                                          />
                                 })
 
