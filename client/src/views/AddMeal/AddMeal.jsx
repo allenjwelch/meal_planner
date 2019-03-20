@@ -1,5 +1,6 @@
 import React, {Component} from 'react'; 
 import API from '../../utils/API';
+import Meal from '../../components/Meal'; 
 
 import './style.css'; 
 
@@ -8,6 +9,7 @@ class AddMeal extends Component {
     state = {
         userID: '',
         allMeals: [],
+        isEditing: false,
     }
 
     componentDidMount() {
@@ -88,6 +90,14 @@ class AddMeal extends Component {
 
     }
 
+    edit(e) {
+        console.log('editing...')
+        console.log(e.target.parentNode); 
+        // this.setState({ isEditing: true })
+
+
+    }
+
     render() {
         return (
             <div className="main">
@@ -122,10 +132,47 @@ class AddMeal extends Component {
                             <div id="fail"></div>
                         </form>
 
-                        <div className="actions">
-                            <button className="add" onClick={() => this.add()}>Add Meal</button>
-                            <button className="cancel"><a href="/">Go Back</a></button>
+                            {
+                                this.state.isEditing ? 
+                                <div className="actions">
+                                    <button className="update" onClick={() => this.update()}>Update Meal</button>
+                                    <button className="cancel"><a href="/">Go Back</a></button>
+                                </div>
+
+                                : <div className="actions">
+                                    <button className="add" onClick={() => this.add()}>Add Meal</button>
+                                    <button className="cancel"><a href="/">Go Back</a></button>
+                                </div>
+
+                            }
+
+                        <h3>Current Meals</h3>
+                        <div className="user-meals">
+                            {
+                                this.state.allMeals.sort( (a, b) => a.meal > b.meal ? 1 : -1)
+                                    .map( (meal, index) => {
+                                    return <Meal
+                                        key={index}
+                                        id={meal.id}
+                                        meal={meal.meal} 
+                                        ingred1={meal.ingred1}
+                                        ingred2={meal.ingred2}
+                                        ingred3={meal.ingred3}
+                                        ingred4={meal.ingred4}
+                                        ingred5={meal.ingred5}
+                                        ingred6={meal.ingred6}
+                                        ingred7={meal.ingred7}
+                                        ingred8={meal.ingred8}
+                                        prep_time={meal.prep_time}
+                                        edit={this.edit}
+                                         />
+                                })
+
+                            }
+
+                        
                         </div>
+
                     </div>
 
 
