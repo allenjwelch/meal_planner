@@ -90,9 +90,32 @@ router.post('/new', (req, res) => {
         });
 
     }); 
-
-
-    
 })
+
+router.put("/update", (req, res) => {
+    console.log("Meals API has been hit");
+
+    // console.log(req);
+    // console.log(req.params);
+    console.log("uid:" , req.body.uid);
+    console.log("meal:" , req.body.updatedMeal);
+    connection.query(`
+        UPDATE meals SET 
+        meal = '${req.body.updatedMeal.meal}', 
+        prep_time = '${req.body.updatedMeal.prep_time}', 
+        ingred1 = '${req.body.updatedMeal.ingred1}', 
+        ingred2 = '${req.body.updatedMeal.ingred2}', 
+        ingred3 = '${req.body.updatedMeal.ingred3}', 
+        ingred4 = '${req.body.updatedMeal.ingred4}', 
+        ingred5 = '${req.body.updatedMeal.ingred5}',
+        ingred6 = '${req.body.updatedMeal.ingred6}',
+        ingred7 = '${req.body.updatedMeal.ingred7}',
+        ingred8 = '${req.body.updatedMeal.ingred8}' 
+        WHERE user_id = '${req.body.uid}' 
+        AND id = '${req.body.updatedMeal.id}';`, (err, data) => {
+            if (err) throw err;
+            res.send(data);
+        }) 
+});
 
 module.exports = router;

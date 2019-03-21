@@ -119,6 +119,50 @@ class AddMeal extends Component {
 
     update() {
         console.log('updating...'); 
+        if(document.getElementById('meal-name').value && document.getElementById('meal-prep').value) {
+            console.log('has name')
+            if(isNaN(document.getElementById('meal-prep').value)) {
+                console.log('NOT a number')
+                document.getElementById('invalid-time').innerHTML = 'Please enter a valid number for Prep Time in minutes'; 
+            } else {
+                console.log('number');
+                
+                let updatedMeal = {
+                    id: document.getElementById('meal-name').dataset.mealId,
+                    meal: document.getElementById('meal-name').value, 
+                    prep_time: document.getElementById('meal-prep').value, 
+                    ingred1: document.getElementById('meal-ingred-1').value, 
+                    ingred2: document.getElementById('meal-ingred-2').value, 
+                    ingred3: document.getElementById('meal-ingred-3').value, 
+                    ingred4: document.getElementById('meal-ingred-4').value, 
+                    ingred5: document.getElementById('meal-ingred-5').value, 
+                    ingred6: document.getElementById('meal-ingred-6').value, 
+                    ingred7: document.getElementById('meal-ingred-7').value, 
+                    ingred8: document.getElementById('meal-ingred-8').value
+                }
+    
+                API.updateMeal(this.state.userID, updatedMeal)
+                    .then(res => {
+                        // console.log('resdata: ', res.data)
+                        if(!res.data) {
+                            document.getElementById('invalid-time').innerHTML= ''; 
+                            document.getElementById('success').innerHTML = ''; 
+                            document.getElementById('fail').innerHTML = 'Sorry, it looks like something went wrong..'; 
+                        } else {
+                            document.querySelector('form').reset();
+                            document.getElementById('invalid-time').innerHTML= '';
+                            document.getElementById('fail').innerHTML = ''; 
+                            document.getElementById('success').innerHTML = 'Great! You\'ve just updated your meal!'; 
+                        }
+                    })
+                    .then(this.setState({isEditing: false}))
+                    .catch(err => console.log(err))
+    
+                console.log(updatedMeal); 
+            }
+        } else {
+            document.getElementById('invalid-time').innerHTML = 'Please enter both a name and prep time for your meal'; 
+        }
     }
 
     delete() {
