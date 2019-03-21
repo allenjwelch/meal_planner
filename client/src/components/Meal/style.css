@@ -1,0 +1,18 @@
+.meal p {
+    margin: 0;
+    display: inline-block; 
+    /* width: 50%; */
+}
+
+.meal {
+    padding: 5px; 
+    cursor: pointer;
+    margin: 5px auto;
+}
+
+.meal img {
+    height: 15px;
+    width: 15px; 
+    display: inline-block; 
+    margin-left: 10px;
+}

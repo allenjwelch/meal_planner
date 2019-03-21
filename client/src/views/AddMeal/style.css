@@ -96,3 +96,26 @@
     color: #551A8B; 
 }
 
+.actions .update {
+    background: #199797; 
+    border:2px solid #199797; 
+}
+
+.actions .update:hover  {
+    color: #199797;
+    background: #fff;
+}
+
+.actions .delete {
+    background: #971919; 
+    border: 2px solid #971919; 
+}
+
+.actions .delete:hover  {
+    color: #971919;
+    background: #fff;
+}
+
+.user-meals {
+    columns: 2; 
+}

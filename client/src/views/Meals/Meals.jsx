@@ -246,7 +246,7 @@ class Meals extends Component {
                                 <button className="swap" onClick={() => this.enableSwap()}>Swap</button>
                                 <button className="shuffle" onClick={() => this.shufflePlan()}>Shuffle</button>
                                 <button className="createNew">
-                                    <Link to="/add">Add Meal</Link>
+                                    <Link to="/add">Edit Meals</Link>
                                 </button>                                
                             </div>
 
@@ -264,7 +264,9 @@ class Meals extends Component {
                         <img src={logo} className="logo blank-page" alt="logo" />
                         <h1>No Meals</h1>
                         <button className="createNew">
-                            <Link to="/add">Add Meal</Link>
+                            <Link to={{
+                                pathname: "/add"
+                            }}>Add/Edit Meal</Link>
                         </button>
                         <button className="signout-btn" onClick={() => this.signOut()}>Sign Out</button>
 
