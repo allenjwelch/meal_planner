@@ -93,12 +93,8 @@ router.post('/new', (req, res) => {
 })
 
 router.put("/update", (req, res) => {
-    console.log("Meals API has been hit");
+    console.log("Updating: ", req.body.updatedMeal);
 
-    // console.log(req);
-    // console.log(req.params);
-    console.log("uid:" , req.body.uid);
-    console.log("meal:" , req.body.updatedMeal);
     connection.query(`
         UPDATE meals SET 
         meal = '${req.body.updatedMeal.meal}', 
@@ -117,5 +113,21 @@ router.put("/update", (req, res) => {
             res.send(data);
         }) 
 });
+
+router.delete("/delete/:uid/:meal_id", (req, res) => {
+    console.log("Deleting meal: ", req.params)
+    // console.log(res); 
+    // DELETE FROM meals WHERE WHERE user_id = '${req.body.uid}' AND id = '${req.body.meal_id}'
+    console.log(req.params.id)
+    console.log(req.params.meal_id)
+    connection.query(`
+    DELETE FROM meals 
+    WHERE user_id = '${req.params.uid}' 
+    AND id = '${req.params.meal_id}';`, (err, data) => {
+        if (err) throw err;
+        res.send(data);
+    }) 
+})
+
 
 module.exports = router;

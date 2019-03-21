@@ -85,6 +85,8 @@ class AddMeal extends Component {
                             document.getElementById('success').innerHTML = 'Great! You\'ve just added a new meal!'; 
                         }
                     })
+                    .then(this.getAllMeals())
+                    .then(document.querySelector('.add-title').scrollIntoView({behavior: "smooth"}))
                     .catch(err => console.log(err))
     
                 console.log(newMeal); 
@@ -155,7 +157,10 @@ class AddMeal extends Component {
                             document.getElementById('success').innerHTML = 'Great! You\'ve just updated your meal!'; 
                         }
                     })
-                    .then(this.setState({isEditing: false}))
+                    .then(this.setState({isEditing: false}, () => {
+                        this.getAllMeals()
+                        document.querySelector('.add-title').scrollIntoView({behavior: "smooth"})
+                    }))
                     .catch(err => console.log(err))
     
                 console.log(updatedMeal); 
@@ -167,6 +172,19 @@ class AddMeal extends Component {
 
     delete() {
         console.log('deleting...'); 
+        let meal_id = document.getElementById('meal-name').dataset.mealId;
+        console.log(meal_id); 
+        API.deleteMeal(this.state.userID, meal_id) 
+            .then(res => {
+                console.log(res)
+                document.getElementById('success').innerHTML = 'Yeah that meal sucked anyway...'; 
+            })
+            .then(this.setState({isEditing: false}, () => {
+                this.getAllMeals()
+                document.querySelector('form').reset()
+                document.querySelector('.add-title').scrollIntoView({behavior: "smooth"})
+            }))
+            .catch(err => console.log(err))
     }
 
 
