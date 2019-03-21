@@ -89,7 +89,7 @@ class AddMeal extends Component {
                     .then(document.querySelector('.add-title').scrollIntoView({behavior: "smooth"}))
                     .catch(err => console.log(err))
     
-                console.log(newMeal); 
+                // console.log(newMeal); 
             }
         } else {
             document.getElementById('invalid-time').innerHTML = 'Please enter both a name and prep time for your meal'; 
@@ -101,7 +101,7 @@ class AddMeal extends Component {
         console.log('editing...')
         this.setState({ isEditing: true })
         let mealID = e.target.parentNode.dataset.mealId;
-        console.log(mealID); 
+        // console.log(mealID); 
 
         let mealEdit = this.state.allMeals.filter(meal => meal.id === parseInt(mealID)); 
         console.log(mealEdit); 
@@ -124,10 +124,10 @@ class AddMeal extends Component {
         if(document.getElementById('meal-name').value && document.getElementById('meal-prep').value) {
             console.log('has name')
             if(isNaN(document.getElementById('meal-prep').value)) {
-                console.log('NOT a number')
+                // console.log('NOT a number')
                 document.getElementById('invalid-time').innerHTML = 'Please enter a valid number for Prep Time in minutes'; 
             } else {
-                console.log('number');
+                // console.log('number');
                 
                 let updatedMeal = {
                     id: document.getElementById('meal-name').dataset.mealId,
@@ -163,7 +163,7 @@ class AddMeal extends Component {
                     }))
                     .catch(err => console.log(err))
     
-                console.log(updatedMeal); 
+                // console.log(updatedMeal); 
             }
         } else {
             document.getElementById('invalid-time').innerHTML = 'Please enter both a name and prep time for your meal'; 
@@ -173,10 +173,10 @@ class AddMeal extends Component {
     delete() {
         console.log('deleting...'); 
         let meal_id = document.getElementById('meal-name').dataset.mealId;
-        console.log(meal_id); 
+        // console.log(meal_id); 
         API.deleteMeal(this.state.userID, meal_id) 
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 document.getElementById('success').innerHTML = 'Yeah that meal sucked anyway...'; 
             })
             .then(this.setState({isEditing: false}, () => {

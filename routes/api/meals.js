@@ -116,10 +116,6 @@ router.put("/update", (req, res) => {
 
 router.delete("/delete/:uid/:meal_id", (req, res) => {
     console.log("Deleting meal: ", req.params)
-    // console.log(res); 
-    // DELETE FROM meals WHERE WHERE user_id = '${req.body.uid}' AND id = '${req.body.meal_id}'
-    console.log(req.params.id)
-    console.log(req.params.meal_id)
     connection.query(`
     DELETE FROM meals 
     WHERE user_id = '${req.params.uid}' 
