@@ -90,9 +90,44 @@ router.post('/new', (req, res) => {
         });
 
     }); 
-
-
-    
 })
+
+router.put("/update", (req, res) => {
+    console.log("Updating: ", req.body.updatedMeal);
+
+    connection.query(`
+        UPDATE meals SET 
+        meal = '${req.body.updatedMeal.meal}', 
+        prep_time = '${req.body.updatedMeal.prep_time}', 
+        ingred1 = '${req.body.updatedMeal.ingred1}', 
+        ingred2 = '${req.body.updatedMeal.ingred2}', 
+        ingred3 = '${req.body.updatedMeal.ingred3}', 
+        ingred4 = '${req.body.updatedMeal.ingred4}', 
+        ingred5 = '${req.body.updatedMeal.ingred5}',
+        ingred6 = '${req.body.updatedMeal.ingred6}',
+        ingred7 = '${req.body.updatedMeal.ingred7}',
+        ingred8 = '${req.body.updatedMeal.ingred8}' 
+        WHERE user_id = '${req.body.uid}' 
+        AND id = '${req.body.updatedMeal.id}';`, (err, data) => {
+            if (err) throw err;
+            res.send(data);
+        }) 
+});
+
+router.delete("/delete/:uid/:meal_id", (req, res) => {
+    console.log("Deleting meal: ", req.params)
+    // console.log(res); 
+    // DELETE FROM meals WHERE WHERE user_id = '${req.body.uid}' AND id = '${req.body.meal_id}'
+    console.log(req.params.id)
+    console.log(req.params.meal_id)
+    connection.query(`
+    DELETE FROM meals 
+    WHERE user_id = '${req.params.uid}' 
+    AND id = '${req.params.meal_id}';`, (err, data) => {
+        if (err) throw err;
+        res.send(data);
+    }) 
+})
+
 
 module.exports = router;

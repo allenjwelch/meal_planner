@@ -23,4 +23,10 @@ export default {
     postNewMeal: function(uid, newMeal) {
         return axios.post(`/nomnom/meals/new`, {uid, newMeal})
     },
+    updateMeal: function(uid, updatedMeal) {
+        return axios.put(`nomnom/meals/update`, {uid, updatedMeal})
+    },
+    deleteMeal: function(uid, meal_id) {
+        return axios.delete(`nomnom/meals/delete/${uid}/${meal_id}`)
+    }
 };
