@@ -117,5 +117,11 @@
 }
 
 .user-meals {
-    columns: 2; 
+    columns: 1; 
+}
+
+@media (min-width: 550px) {
+    .user-meals {
+        columns: 2; 
+    }
 }
